@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Gem } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { UserMenu, GuestBanner } from '@/components/layout';
 import {
     GemTypeSelector,
     GemCutSelector,
@@ -135,11 +136,17 @@ export default function CreateDesignPage() {
 
     return (
         <div className="min-h-screen bg-cream">
+            {/* Guest Banner */}
+            <GuestBanner variant="minimal" />
+
             {/* Header */}
             <header className="bg-navy text-white py-4 px-6">
-                <div className="max-w-4xl mx-auto flex items-center gap-3">
-                    <Gem className="w-8 h-8 text-gold" />
-                    <h1 className="text-xl font-serif font-semibold">AI Jewelry Designer</h1>
+                <div className="max-w-4xl mx-auto flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <Gem className="w-8 h-8 text-gold" />
+                        <h1 className="text-xl font-serif font-semibold">AI Jewelry Designer</h1>
+                    </div>
+                    <UserMenu />
                 </div>
             </header>
 

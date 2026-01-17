@@ -6,6 +6,7 @@ import { Gem, ArrowLeft, Save, LogIn, Check } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/auth-context';
 import { saveDesign } from '@/lib/firestore';
+import { UserMenu } from '@/components/layout';
 import {
     DesignSummary,
     DesignGallery,
@@ -191,13 +192,16 @@ function ResultsContent() {
                         <Gem className="w-8 h-8 text-gold" />
                         <h1 className="text-xl font-serif font-semibold">AI Jewelry Designer</h1>
                     </div>
-                    <Link
-                        href="/design/create"
-                        className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        New Design
-                    </Link>
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="/design/create"
+                            className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
+                        >
+                            <ArrowLeft className="w-4 h-4" />
+                            New Design
+                        </Link>
+                        <UserMenu />
+                    </div>
                 </div>
             </header>
 
