@@ -235,7 +235,11 @@ function ResultsContent() {
                 </section>
 
                 {/* Call to Action */}
-                <CallToAction selectedImageId={selectedImageId} />
+                <CallToAction
+                    selectedImageId={selectedImageId}
+                    selectedImageUrl={designData.images.find(img => img.imageId === selectedImageId)?.imageUrl}
+                    designId={designId}
+                />
 
                 {/* Save Design Section */}
                 <section className="bg-white rounded-xl p-6 shadow-sm border border-light-gray">

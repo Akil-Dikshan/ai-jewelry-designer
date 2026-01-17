@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, Suspense } from 'react';
+import { useState, useCallback, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Gem, ArrowLeft, Sparkles, Loader2 } from 'lucide-react';
@@ -17,11 +17,8 @@ import {
 } from '@/components/refine';
 import { Lightbox } from '@/components/design';
 
-// Mock data for development
-const MOCK_VERSIONS = [
-    { id: 'v1', imageUrl: 'https://placehold.co/800x800/F5F5F0/0A1128?text=Original', label: 'Original' },
-    { id: 'v2', imageUrl: 'https://placehold.co/800x800/F5F5F0/0A1128?text=Refinement+1', label: 'Refinement 1' },
-];
+// Fallback mock data (only used if no real data)
+const MOCK_IMAGE_URL = 'https://placehold.co/800x800/F5F5F0/0A1128?text=No+Image';
 
 const MAX_REFINEMENTS = 5;
 
@@ -29,16 +26,18 @@ function RefineContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const imageId = searchParams.get('imageId');
+    const imageUrl = searchParams.get('imageUrl');
+    const designId = searchParams.get('designId');
 
     // State
-    const [versions, setVersions] = useState(MOCK_VERSIONS);
-    const [currentVersionId, setCurrentVersionId] = useState('v2');
+    const [versions, setVersions] = useState<Array<{ id: string; imageUrl: string; label: string }>>([]);
+    const [currentVersionId, setCurrentVersionId] = useState('v1');
     const [refinementText, setRefinementText] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
     const [showResult, setShowResult] = useState(false);
     const [showComparison, setShowComparison] = useState(false);
     const [showLightbox, setShowLightbox] = useState(false);
-    const [refinementsRemaining, setRefinementsRemaining] = useState(MAX_REFINEMENTS - 1);
+    const [refinementsRemaining, setRefinementsRemaining] = useState(MAX_REFINEMENTS);
     const [advancedOptions, setAdvancedOptions] = useState({
         strength: 3,
         preserveGemSize: true,
@@ -47,8 +46,37 @@ function RefineContent() {
         styleGuidance: null as string | null,
     });
 
+    // Load the real image from URL params or sessionStorage
+    useEffect(() => {
+        let originalImageUrl = imageUrl;
+
+        // If no imageUrl in URL, try to get from sessionStorage
+        if (!originalImageUrl && designId) {
+            try {
+                const storedData = sessionStorage.getItem(designId);
+                if (storedData) {
+                    const parsedData = JSON.parse(storedData);
+                    // Find the image matching imageId, or use first image
+                    const targetImage = parsedData.images?.find((img: { imageId: string }) => img.imageId === imageId)
+                        || parsedData.images?.[0];
+                    if (targetImage?.imageUrl) {
+                        originalImageUrl = targetImage.imageUrl;
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading from sessionStorage:', e);
+            }
+        }
+
+        // Initialize versions with the real image
+        const initialImageUrl = originalImageUrl || MOCK_IMAGE_URL;
+        setVersions([
+            { id: 'v1', imageUrl: initialImageUrl, label: 'Original' }
+        ]);
+    }, [imageId, imageUrl, designId]);
+
     const currentVersion = versions.find((v) => v.id === currentVersionId);
-    const previousVersion = versions[versions.length - 2];
+    const previousVersion = versions.length > 1 ? versions[versions.length - 2] : undefined;
 
     // Handlers
     const handleSuggestionClick = useCallback((suggestion: string) => {

@@ -55,20 +55,34 @@ export default function Home() {
           {/* Sample Designs Showcase */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { color: 'from-blue-500 to-blue-600', gem: 'Sapphire Ring' },
-              { color: 'from-red-500 to-pink-600', gem: 'Ruby Pendant' },
-              { color: 'from-emerald-500 to-green-600', gem: 'Emerald Earrings' },
-              { color: 'from-purple-500 to-violet-600', gem: 'Amethyst Bracelet' },
+              {
+                image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&h=400&fit=crop',
+                gem: 'Diamond Ring'
+              },
+              {
+                image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=400&fit=crop',
+                gem: 'Gold Necklace'
+              },
+              {
+                image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop',
+                gem: 'Pearl Earrings'
+              },
+              {
+                image: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400&h=400&fit=crop',
+                gem: 'Gemstone Bracelet'
+              },
             ].map((item, i) => (
               <div
                 key={i}
-                className="aspect-square rounded-xl bg-gradient-to-br shadow-lg overflow-hidden group cursor-pointer transition-transform hover:scale-105"
-                style={{ background: `linear-gradient(135deg, var(--color-cream), var(--color-light-gray))` }}
+                className="aspect-square rounded-xl overflow-hidden group cursor-pointer transition-transform hover:scale-105 shadow-lg relative"
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${item.color} opacity-80 group-hover:opacity-100 transition-opacity shadow-lg`} />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-navy/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                <img
+                  src={item.image}
+                  alt={item.gem}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform">
                   <p className="text-white text-sm font-medium">{item.gem}</p>
                 </div>
               </div>
