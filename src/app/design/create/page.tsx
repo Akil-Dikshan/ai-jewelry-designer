@@ -248,7 +248,7 @@ export default function CreateDesignPage() {
             {/* Loading Overlay */}
             {isLoading && (
                 <div className="fixed inset-0 bg-navy/50 backdrop-blur-sm flex items-center justify-center z-50">
-                    <div className="bg-white rounded-xl p-8 shadow-2xl text-center max-w-md mx-4">
+                    <div className="bg-white rounded-xl p-8 shadow-2xl text-center mx-4" style={{ maxWidth: '448px' }}>
                         <div className="w-16 h-16 border-4 border-light-gray border-t-gold rounded-full animate-spin mx-auto mb-4" />
                         <h3 className="text-xl font-serif font-semibold text-navy mb-2">
                             Creating Your Designs
