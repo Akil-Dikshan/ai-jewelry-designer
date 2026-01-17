@@ -137,17 +137,25 @@ function ResultsContent() {
 
         setIsSaving(true);
         try {
-            await saveDesign(user.uid, {
+            // Add timeout to prevent hanging
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Save timed out')), 15000)
+            );
+
+            const savePromise = saveDesign(user.uid, {
                 designId: designId || 'unknown',
                 images: designData.images,
                 gemData: designData.gemData,
                 prompt: designData.prompt,
                 materials: designData.materials,
             });
+
+            await Promise.race([savePromise, timeoutPromise]);
             setIsSaved(true);
         } catch (err) {
             console.error('Error saving design:', err);
-            alert('Failed to save design. Please try again.');
+            const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+            alert(`Failed to save design: ${errorMessage}. Please check if Firestore is enabled in Firebase Console.`);
         } finally {
             setIsSaving(false);
         }

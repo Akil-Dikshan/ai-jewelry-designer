@@ -16,7 +16,8 @@ export function CallToAction({ selectedImageId, selectedImageUrl, designId, onSh
     const buildRefineUrl = () => {
         const params = new URLSearchParams();
         if (selectedImageId) params.set('imageId', selectedImageId);
-        if (selectedImageUrl) params.set('imageUrl', encodeURIComponent(selectedImageUrl));
+        // Don't double-encode - URLSearchParams.set() already handles encoding
+        if (selectedImageUrl) params.set('imageUrl', selectedImageUrl);
         if (designId) params.set('designId', designId);
         return `/design/refine?${params.toString()}`;
     };
