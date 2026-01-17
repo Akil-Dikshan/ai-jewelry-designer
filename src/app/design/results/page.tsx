@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Gem, ArrowLeft } from 'lucide-react';
+import { Gem, ArrowLeft, Save, LogIn, Check } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/auth-context';
+import { saveDesign } from '@/lib/firestore';
 import {
     DesignSummary,
     DesignGallery,
@@ -48,6 +50,10 @@ function ResultsContent() {
     const [favorites, setFavorites] = useState<string[]>([]);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
+    const [isSaving, setIsSaving] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+
+    const { user } = useAuth();
 
     // Load design data from sessionStorage
     useEffect(() => {
@@ -124,6 +130,27 @@ function ResultsContent() {
     const handleEdit = useCallback(() => {
         router.push('/design/create');
     }, [router]);
+
+    const handleSaveDesign = async () => {
+        if (!user || !designData) return;
+
+        setIsSaving(true);
+        try {
+            await saveDesign(user.uid, {
+                designId: designId || 'unknown',
+                images: designData.images,
+                gemData: designData.gemData,
+                prompt: designData.prompt,
+                materials: designData.materials,
+            });
+            setIsSaved(true);
+        } catch (err) {
+            console.error('Error saving design:', err);
+            alert('Failed to save design. Please try again.');
+        } finally {
+            setIsSaving(false);
+        }
+    };
 
     // Loading state
     if (isLoading) {
@@ -205,6 +232,57 @@ function ResultsContent() {
 
                 {/* Call to Action */}
                 <CallToAction selectedImageId={selectedImageId} />
+
+                {/* Save Design Section */}
+                <section className="bg-white rounded-xl p-6 shadow-sm border border-light-gray">
+                    <h3 className="text-lg font-serif font-semibold text-navy mb-4">
+                        Save This Design
+                    </h3>
+                    {user ? (
+                        <div className="flex items-center gap-4">
+                            {isSaved ? (
+                                <div className="flex items-center gap-2 text-success">
+                                    <Check className="w-5 h-5" />
+                                    <span>Design saved to your collection!</span>
+                                    <Link
+                                        href="/dashboard"
+                                        className="text-gold hover:underline ml-2"
+                                    >
+                                        View Dashboard
+                                    </Link>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={handleSaveDesign}
+                                    disabled={isSaving}
+                                    className="btn-primary flex items-center gap-2 disabled:opacity-50"
+                                >
+                                    <Save className="w-5 h-5" />
+                                    {isSaving ? 'Saving...' : 'Save to My Collection'}
+                                </button>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-4 flex-wrap">
+                            <p className="text-slate">
+                                Sign in to save this design to your collection
+                            </p>
+                            <Link
+                                href="/auth/sign-in"
+                                className="btn-secondary flex items-center gap-2"
+                            >
+                                <LogIn className="w-5 h-5" />
+                                Sign In
+                            </Link>
+                            <Link
+                                href="/auth/sign-up"
+                                className="text-gold hover:underline"
+                            >
+                                Create Account
+                            </Link>
+                        </div>
+                    )}
+                </section>
 
                 {/* Disclaimer */}
                 <DesignDisclaimer />
