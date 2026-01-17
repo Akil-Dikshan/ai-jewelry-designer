@@ -19,7 +19,9 @@ if (!apiKey) {
 // Initialize the Gemini client
 const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
 
-// Use the Gemini 2.0 Flash model which supports image generation
+// Use Gemini 2.0 Flash Experimental for image generation
+// This is the ONLY model that supports image output
+// Requires billing enabled for quota
 const MODEL_NAME = 'gemini-2.0-flash-exp';
 
 /**
@@ -83,7 +85,6 @@ export async function generateImages(config: GenerationConfig): Promise<Generate
         // Extract images from response
         for (const candidate of response.candidates || []) {
             for (const part of candidate.content?.parts || []) {
-                // Check if this part contains image data
                 if ('inlineData' in part && part.inlineData) {
                     images.push({
                         base64: part.inlineData.data,

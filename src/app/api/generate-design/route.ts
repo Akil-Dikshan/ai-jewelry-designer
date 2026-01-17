@@ -147,6 +147,7 @@ export async function POST(request: NextRequest) {
                         );
 
                         if (result.length > 0) {
+                            console.log(`Variation ${i + 1}: Uploading image to Firebase...`);
                             // Upload to Firebase Storage
                             const imageUrl = await uploadBase64Image(
                                 result[0].base64,
@@ -154,6 +155,7 @@ export async function POST(request: NextRequest) {
                                 'designs'
                             );
 
+                            console.log(`Variation ${i + 1}: Upload SUCCESS! URL:`, imageUrl);
                             generatedImages.push({
                                 imageId: `gen-${generateId()}`,
                                 imageUrl,
@@ -161,7 +163,7 @@ export async function POST(request: NextRequest) {
                             });
                         }
                     } catch (genError) {
-                        console.error(`Failed to generate variation ${i + 1}:`, genError);
+                        console.error(`Failed to generate/upload variation ${i + 1}:`, genError);
                         // Continue to next variation
                     }
                 }

@@ -105,6 +105,25 @@ export default function CreateDesignPage() {
                 throw new Error(data.error?.message || 'Failed to generate design');
             }
 
+            // Store design data in sessionStorage for results page
+            const designDataToStore = {
+                designId: data.designId,
+                images: data.images,
+                gemData: {
+                    type: gemType === 'Other' ? customGemType : gemType,
+                    cut: gemCut,
+                    size: gemSize.mode === 'simple' ? gemSize.simple : 'Custom',
+                    color: gemColor === 'custom' ? customColor : gemColor,
+                    transparency,
+                },
+                prompt: designPrompt,
+                materials: {
+                    metals: materials.metals,
+                    finish: materials.finish,
+                },
+            };
+            sessionStorage.setItem(data.designId, JSON.stringify(designDataToStore));
+
             // Navigate to results page with design ID
             router.push(`/design/results?id=${data.designId}`);
         } catch (err) {

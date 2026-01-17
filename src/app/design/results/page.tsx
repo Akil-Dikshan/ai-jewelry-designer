@@ -49,24 +49,30 @@ function ResultsContent() {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
 
-    // Simulate loading design data
+    // Load design data from sessionStorage
     useEffect(() => {
         const loadDesign = async () => {
             setIsLoading(true);
             setError(null);
 
             try {
-                // Simulate API call
-                await new Promise((resolve) => setTimeout(resolve, 500));
-
-                if (!designId) {
-                    // Use mock data if no ID provided (for development)
-                    setDesignData(MOCK_DESIGN_RESPONSE);
+                if (designId) {
+                    // Try to load from sessionStorage
+                    const storedData = sessionStorage.getItem(designId);
+                    if (storedData) {
+                        const parsedData = JSON.parse(storedData);
+                        setDesignData(parsedData);
+                    } else {
+                        // Fallback to mock data if no stored data
+                        console.warn('No stored design data found for:', designId);
+                        setDesignData(MOCK_DESIGN_RESPONSE);
+                    }
                 } else {
-                    // In production, fetch from API
+                    // Use mock data if no ID provided (for development)
                     setDesignData(MOCK_DESIGN_RESPONSE);
                 }
             } catch (err) {
+                console.error('Error loading design:', err);
                 setError('Failed to load your designs. Please try again.');
             } finally {
                 setIsLoading(false);
