@@ -19,7 +19,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section id="main-content" className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-navy/5 via-transparent to-gold/10" />
         <div className="max-w-6xl mx-auto px-4 py-16 md:py-24 relative">
           <div className="text-center">

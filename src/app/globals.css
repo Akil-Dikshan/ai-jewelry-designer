@@ -401,3 +401,166 @@ h6 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===================================================================
+   MOBILE RESPONSIVENESS
+   =================================================================== */
+
+/* Touch-friendly minimum sizes */
+@media (max-width: 768px) {
+
+  .btn-primary,
+  .btn-secondary {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 24px;
+  }
+
+  .input-field {
+    min-height: 44px;
+    font-size: 16px;
+    /* Prevents iOS zoom on focus */
+  }
+
+  /* Mobile-first typography scaling */
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Reduce padding on mobile */
+  .card {
+    padding: 16px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ===================================================================
+   ACCESSIBILITY
+   =================================================================== */
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--color-navy);
+  color: white;
+  padding: 12px 24px;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* High contrast selection */
+::selection {
+  background-color: var(--color-gold);
+  color: var(--color-navy);
+}
+
+/* Ensure links are distinguishable */
+a {
+  text-decoration-skip-ink: auto;
+}
+
+/* Better focus for checkboxes and radios */
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Disabled state styling */
+[disabled],
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===================================================================
+   UTILITY CLASSES
+   =================================================================== */
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Truncate text */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

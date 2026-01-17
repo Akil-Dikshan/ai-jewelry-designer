@@ -32,6 +32,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} antialiased`}
       >
+        {/* Skip to main content for keyboard users */}
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <AuthProvider>
           <ToastProvider>
             {children}
