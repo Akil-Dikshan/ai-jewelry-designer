@@ -98,6 +98,7 @@ function RefineContent() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     imageId: currentVersionId,
+                    imageUrl: currentVersion?.imageUrl, // Send the actual image URL
                     refinementPrompt: refinementText,
                     advancedOptions,
                 }),
