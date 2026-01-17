@@ -39,7 +39,7 @@ export function QuickSuggestions({
                         disabled={disabled}
                         className={cn(
                             'px-3 py-1.5 rounded-full text-sm',
-                            'border border-light-gray bg-white',
+                            'border border-light-gray bg-white text-navy',
                             'transition-all duration-200',
                             'hover:border-gold hover:bg-cream hover:text-gold',
                             'focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2',
