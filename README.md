@@ -165,5 +165,5 @@ MIT License - feel free to use this project for personal or commercial purposes.
 ---
 
 <p align="center">
-  Made with ❤️ and AI
+  Made with ❤️
 </p>
