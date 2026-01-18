@@ -2,7 +2,7 @@
 
 > Transform your vision into stunning jewelry designs with the power of AI
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ai-jewelry-design.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ai-jewelry-designer.vercel.app/)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8)](https://tailwindcss.com/)
 [![Firebase](https://img.shields.io/badge/Firebase-Auth%20%26%20Storage-ffca28)](https://firebase.google.com/)
