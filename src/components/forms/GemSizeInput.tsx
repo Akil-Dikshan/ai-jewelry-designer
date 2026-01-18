@@ -78,9 +78,9 @@ export function GemSizeInput({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-navy mb-3">
+            <label className="block text-sm font-medium text-white/70 mb-3">
                 What size is your gem?
-                {required && <span className="text-error ml-1">*</span>}
+                {required && <span className="text-gold ml-1">*</span>}
             </label>
 
             {/* Simple Size Options (Radio Buttons) */}
@@ -94,12 +94,12 @@ export function GemSizeInput({
                         <label
                             key={size.value}
                             className={cn(
-                                'flex items-start p-4 rounded-lg border-2 cursor-pointer',
+                                'flex items-start p-4 rounded-xl border cursor-pointer',
                                 'transition-all duration-200',
                                 disabled && 'opacity-60 cursor-not-allowed',
                                 value.simple === size.value
-                                    ? 'border-gold bg-cream'
-                                    : 'border-light-gray bg-white hover:border-gold'
+                                    ? 'border-gold/50 bg-gold/10'
+                                    : 'border-white/10 bg-white/5 hover:border-gold/30 hover:bg-white/10'
                             )}
                         >
                             <input
@@ -117,16 +117,16 @@ export function GemSizeInput({
                                     'transition-colors duration-200',
                                     value.simple === size.value
                                         ? 'border-gold bg-gold'
-                                        : 'border-light-gray'
+                                        : 'border-white/30'
                                 )}
                             >
                                 {value.simple === size.value && (
-                                    <div className="w-2 h-2 rounded-full bg-white" />
+                                    <div className="w-2 h-2 rounded-full bg-navy" />
                                 )}
                             </div>
                             <div>
-                                <span className="font-medium text-navy">{size.label}</span>
-                                <p className="text-sm text-slate mt-0.5">{size.description}</p>
+                                <span className="font-medium text-white">{size.label}</span>
+                                <p className="text-sm text-white/50 mt-0.5">{size.description}</p>
                             </div>
                         </label>
                     ))}
@@ -141,7 +141,7 @@ export function GemSizeInput({
                 className={cn(
                     'flex items-center gap-1 mt-3',
                     'text-sm font-medium text-gold',
-                    'hover:underline focus:outline-none focus:underline',
+                    'hover:text-gold/80 focus:outline-none',
                     disabled && 'opacity-60 cursor-not-allowed'
                 )}
             >
@@ -160,15 +160,15 @@ export function GemSizeInput({
 
             {/* Advanced Dimensions Input */}
             {isAdvancedOpen && (
-                <div className="mt-4 p-4 bg-cream rounded-lg border border-light-gray">
-                    <p className="text-sm text-slate mb-4">
+                <div className="mt-4 p-4 bg-white/5 rounded-xl border border-white/10">
+                    <p className="text-sm text-white/50 mb-4">
                         Enter your gem dimensions in millimeters
                     </p>
 
                     <div className="grid grid-cols-3 gap-4 mb-4">
                         {/* Length */}
                         <div>
-                            <label className="block text-xs font-medium text-navy mb-1">
+                            <label className="block text-xs font-medium text-white/60 mb-1">
                                 Length (mm)
                             </label>
                             <input
@@ -182,8 +182,9 @@ export function GemSizeInput({
                                 placeholder="0.0"
                                 className={cn(
                                     'w-full px-3 py-2 text-sm',
-                                    'bg-white border border-light-gray rounded-md',
-                                    'focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
+                                    'bg-white/5 border border-white/10 rounded-lg',
+                                    'text-white placeholder:text-white/30',
+                                    'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50',
                                     disabled && 'opacity-60 cursor-not-allowed'
                                 )}
                             />
@@ -191,7 +192,7 @@ export function GemSizeInput({
 
                         {/* Width */}
                         <div>
-                            <label className="block text-xs font-medium text-navy mb-1">
+                            <label className="block text-xs font-medium text-white/60 mb-1">
                                 Width (mm)
                             </label>
                             <input
@@ -205,8 +206,9 @@ export function GemSizeInput({
                                 placeholder="0.0"
                                 className={cn(
                                     'w-full px-3 py-2 text-sm',
-                                    'bg-white border border-light-gray rounded-md',
-                                    'focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
+                                    'bg-white/5 border border-white/10 rounded-lg',
+                                    'text-white placeholder:text-white/30',
+                                    'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50',
                                     disabled && 'opacity-60 cursor-not-allowed'
                                 )}
                             />
@@ -214,7 +216,7 @@ export function GemSizeInput({
 
                         {/* Height */}
                         <div>
-                            <label className="block text-xs font-medium text-navy mb-1">
+                            <label className="block text-xs font-medium text-white/60 mb-1">
                                 Height (mm)
                             </label>
                             <input
@@ -228,8 +230,9 @@ export function GemSizeInput({
                                 placeholder="0.0"
                                 className={cn(
                                     'w-full px-3 py-2 text-sm',
-                                    'bg-white border border-light-gray rounded-md',
-                                    'focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
+                                    'bg-white/5 border border-white/10 rounded-lg',
+                                    'text-white placeholder:text-white/30',
+                                    'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50',
                                     disabled && 'opacity-60 cursor-not-allowed'
                                 )}
                             />
@@ -238,7 +241,7 @@ export function GemSizeInput({
 
                     {/* Carat Weight (Optional) */}
                     <div className="max-w-[200px]">
-                        <label className="block text-xs font-medium text-navy mb-1">
+                        <label className="block text-xs font-medium text-white/60 mb-1">
                             Carat Weight (optional)
                         </label>
                         <input
@@ -252,8 +255,9 @@ export function GemSizeInput({
                             placeholder="0.00"
                             className={cn(
                                 'w-full px-3 py-2 text-sm',
-                                'bg-white border border-light-gray rounded-md',
-                                'focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
+                                'bg-white/5 border border-white/10 rounded-lg',
+                                'text-white placeholder:text-white/30',
+                                'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50',
                                 disabled && 'opacity-60 cursor-not-allowed'
                             )}
                         />
@@ -263,7 +267,7 @@ export function GemSizeInput({
 
             {/* Error Message */}
             {error && (
-                <p className="mt-2 text-sm text-error" role="alert">
+                <p className="mt-2 text-sm text-red-400" role="alert">
                     {error}
                 </p>
             )}

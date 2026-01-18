@@ -102,9 +102,9 @@ export function GemCutSelector({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-navy mb-3">
+            <label className="block text-sm font-medium text-white/70 mb-3">
                 What is the shape/cut of your gem?
-                {required && <span className="text-error ml-1">*</span>}
+                {required && <span className="text-gold ml-1">*</span>}
             </label>
 
             {/* Grid of Cut Options */}
@@ -127,20 +127,20 @@ export function GemCutSelector({
                         title={cut.description}
                         className={cn(
                             'flex flex-col items-center justify-center',
-                            'p-4 rounded-lg',
-                            'border-2 transition-all duration-200',
-                            'focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2',
+                            'p-4 rounded-xl',
+                            'border transition-all duration-200',
+                            'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:ring-offset-2 focus:ring-offset-[#0a0a0f]',
                             disabled && 'opacity-60 cursor-not-allowed',
                             !disabled && 'cursor-pointer',
                             value === cut.id
-                                ? 'border-gold bg-cream text-gold shadow-md'
-                                : 'border-light-gray bg-white text-slate hover:border-gold hover:text-gold hover:scale-105'
+                                ? 'border-gold/50 bg-gold/10 text-gold shadow-lg shadow-gold/10'
+                                : 'border-white/10 bg-white/5 text-white/60 hover:border-gold/30 hover:bg-white/10 hover:text-white hover:scale-105'
                         )}
                     >
                         {/* Cut Icon */}
                         <div className={cn(
                             'mb-2 transition-colors duration-200',
-                            value === cut.id ? 'text-gold' : 'text-slate'
+                            value === cut.id ? 'text-gold' : 'text-white/50'
                         )}>
                             <CutIcon cutId={cut.id} />
                         </div>
@@ -149,7 +149,7 @@ export function GemCutSelector({
                         <span className={cn(
                             'text-xs font-medium text-center',
                             'transition-colors duration-200',
-                            value === cut.id ? 'text-navy' : 'text-slate'
+                            value === cut.id ? 'text-gold' : 'text-white/70'
                         )}>
                             {cut.name}
                         </span>
@@ -158,13 +158,13 @@ export function GemCutSelector({
             </div>
 
             {/* Helper Text */}
-            <p className="mt-3 text-sm text-slate">
+            <p className="mt-3 text-sm text-white/40">
                 Click on a shape that matches your gemstone
             </p>
 
             {/* Error Message */}
             {error && (
-                <p className="mt-1 text-sm text-error" role="alert">
+                <p className="mt-1 text-sm text-red-400" role="alert">
                     {error}
                 </p>
             )}
