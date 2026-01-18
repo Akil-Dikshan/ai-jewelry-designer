@@ -1,116 +1,169 @@
-# AI Jewelry Designer 💎
+# AI Jewelry Designer 💎✨
 
-AI-powered jewelry design platform using Google Gemini for image generation. Create stunning jewelry concepts from your gem descriptions.
+> Transform your vision into stunning jewelry designs with the power of AI
 
-## Features
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ai-jewelry-design.vercel.app)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8)](https://tailwindcss.com/)
+[![Firebase](https://img.shields.io/badge/Firebase-Auth%20%26%20Storage-ffca28)](https://firebase.google.com/)
 
-- 🎨 **Design Generation** - Describe your vision, get multiple concepts
-- ✨ **Refinement** - Iterate on designs with AI-powered editing
-- 💾 **Save & Share** - Save designs to localStorage, share with unique links
-- 🔐 **Authentication** - Firebase Auth with email/password
-- 📱 **Responsive** - Works on desktop, tablet, and mobile
-
-## Tech Stack
-
-- **Frontend**: Next.js 16, React, Tailwind CSS
-- **AI**: Google Gemini 2.0 Flash
-- **Auth & Storage**: Firebase
-- **Deployment**: Vercel
+![AI Jewelry Designer Preview](https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1200&h=400&fit=crop)
 
 ---
 
-## Getting Started
+## ✨ Features
 
-### 1. Clone & Install
+| Feature | Description |
+|---------|-------------|
+| 🎨 **AI Design Generation** | Describe your dream jewelry and get multiple unique concepts |
+| 🔄 **Iterative Refinement** | Fine-tune designs with natural language instructions |
+| 💾 **Save & Share** | Save favorites to your collection and share via unique links |
+| 📱 **Responsive Design** | Beautiful experience on desktop, tablet, and mobile |
+| 🔐 **User Authentication** | Secure Firebase authentication with email/password |
+| 🖼️ **Multiple Variations** | Generate 2-4 design variations per request |
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) with App Router
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) 
+- **AI**: [Google Gemini 2.0 Flash](https://ai.google.dev/) for image generation
+- **Auth**: [Firebase Authentication](https://firebase.google.com/products/auth)
+- **Storage**: [Firebase Storage](https://firebase.google.com/products/storage)
+- **Hosting**: [Vercel](https://vercel.com/)
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Google Gemini API key
+- Firebase project
+
+### Installation
 
 ```bash
+# Clone the repository
 git clone https://github.com/Akil-Dikshan/ai-jewelry-design.git
 cd ai-jewelry-design
+
+# Install dependencies
 npm install
-```
 
-### 2. Environment Setup
-
-Copy `.env.example` to `.env.local` and fill in your values:
-
-```bash
+# Set up environment variables
 cp .env.example .env.local
-```
+# Edit .env.local with your API keys
 
-Required variables:
-- `GEMINI_API_KEY` - Get from [Google AI Studio](https://aistudio.google.com/)
-- Firebase config - Get from [Firebase Console](https://console.firebase.google.com/)
-
-### 3. Run Development Server
-
-```bash
+# Start development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000) 🎉
 
 ---
 
-## Deployment to Vercel
+## ⚙️ Environment Variables
 
-### Quick Deploy
+Create a `.env.local` file with the following:
 
-1. **Create Vercel Account**: Sign up at [vercel.com](https://vercel.com) with GitHub
-2. **Import Project**: Click "New Project" → Select `ai-jewelry-design` repo
-3. **Set Environment Variables**: In project settings, add all variables from `.env.example`
-4. **Deploy**: Click Deploy
+```env
+# Google Gemini API
+GEMINI_API_KEY=your_key_here
 
-### Environment Variables for Vercel
+# Firebase (Client-side)
+NEXT_PUBLIC_FIREBASE_API_KEY=xxx
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=xxx.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=xxx
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=xxx.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=xxx
+NEXT_PUBLIC_FIREBASE_APP_ID=xxx
 
-Add these in Vercel Dashboard → Settings → Environment Variables:
-
-| Variable | Description |
-|----------|-------------|
-| `GEMINI_API_KEY` | Google Gemini API key |
-| `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase API key |
-| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase auth domain |
-| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | Firebase project ID |
-| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | Firebase storage bucket |
-| `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Firebase sender ID |
-| `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase app ID |
-| `FIREBASE_PROJECT_ID` | Same as above (server-side) |
-| `FIREBASE_CLIENT_EMAIL` | Firebase service account email |
-| `FIREBASE_PRIVATE_KEY` | Firebase private key (with quotes) |
-| `FIREBASE_STORAGE_BUCKET` | Same as above (server-side) |
-
-### Health Check
-
-After deployment, verify: `https://your-app.vercel.app/api/health`
-
----
-
-## Post-Deployment Checklist
-
-- [ ] Health endpoint returns status: healthy
-- [ ] Homepage loads correctly
-- [ ] Design generation works
-- [ ] Authentication works
-- [ ] Images save to Firebase Storage
-- [ ] Share/Save features work
-
----
-
-## Project Structure
-
-```
-src/
-├── app/                 # Next.js pages
-│   ├── api/            # API routes
-│   ├── auth/           # Auth pages
-│   └── design/         # Design pages
-├── components/         # React components
-├── contexts/           # React contexts
-├── lib/               # Utilities
-└── types/             # TypeScript types
+# Firebase (Server-side)
+FIREBASE_PROJECT_ID=xxx
+FIREBASE_CLIENT_EMAIL=xxx@xxx.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+FIREBASE_STORAGE_BUCKET=xxx.appspot.com
 ```
 
 ---
 
-## License
+## 📁 Project Structure
 
-MIT
+```
+ai-jewelry-design/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── api/               # API routes
+│   │   ├── auth/              # Authentication pages
+│   │   └── design/            # Design flow pages
+│   ├── components/            # React components
+│   │   ├── design/           # Design-specific components
+│   │   ├── forms/            # Form components
+│   │   ├── layout/           # Layout components
+│   │   ├── refine/           # Refinement components
+│   │   └── ui/               # Reusable UI components
+│   ├── contexts/              # React contexts
+│   ├── lib/                   # Utilities & API clients
+│   └── types/                 # TypeScript types
+├── Documentation/             # Project documentation
+└── public/                    # Static assets
+```
+
+---
+
+## 🎯 How It Works
+
+1. **Describe Your Gem** - Select gem type, cut, color, and size
+2. **Add Your Vision** - Describe the jewelry style you want
+3. **Generate Designs** - AI creates multiple unique concepts
+4. **Refine & Iterate** - Fine-tune with natural language
+5. **Save & Share** - Download or share your favorites
+
+---
+
+## 🔒 Security
+
+- ✅ Security headers configured
+- ✅ API keys server-side only
+- ✅ Firebase security rules
+- ✅ Input validation on all forms
+- ✅ HTTPS enforced
+
+---
+
+## 📊 API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/generate-design` | POST | Generate jewelry designs |
+| `/api/refine-design` | POST | Refine existing design |
+| `/api/health` | GET | Health check endpoint |
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+## 📄 License
+
+MIT License - feel free to use this project for personal or commercial purposes.
+
+---
+
+## 👨‍💻 Author
+
+**Akil Dikshan**
+
+- GitHub: [@Akil-Dikshan](https://github.com/Akil-Dikshan)
+
+---
+
+<p align="center">
+  Made with ❤️ and AI
+</p>
