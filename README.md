@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Jewelry Designer 💎
+
+AI-powered jewelry design platform using Google Gemini for image generation. Create stunning jewelry concepts from your gem descriptions.
+
+## Features
+
+- 🎨 **Design Generation** - Describe your vision, get multiple concepts
+- ✨ **Refinement** - Iterate on designs with AI-powered editing
+- 💾 **Save & Share** - Save designs to localStorage, share with unique links
+- 🔐 **Authentication** - Firebase Auth with email/password
+- 📱 **Responsive** - Works on desktop, tablet, and mobile
+
+## Tech Stack
+
+- **Frontend**: Next.js 16, React, Tailwind CSS
+- **AI**: Google Gemini 2.0 Flash
+- **Auth & Storage**: Firebase
+- **Deployment**: Vercel
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/Akil-Dikshan/ai-jewelry-design.git
+cd ai-jewelry-design
+npm install
+```
+
+### 2. Environment Setup
+
+Copy `.env.example` to `.env.local` and fill in your values:
+
+```bash
+cp .env.example .env.local
+```
+
+Required variables:
+- `GEMINI_API_KEY` - Get from [Google AI Studio](https://aistudio.google.com/)
+- Firebase config - Get from [Firebase Console](https://console.firebase.google.com/)
+
+### 3. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment to Vercel
 
-## Learn More
+### Quick Deploy
 
-To learn more about Next.js, take a look at the following resources:
+1. **Create Vercel Account**: Sign up at [vercel.com](https://vercel.com) with GitHub
+2. **Import Project**: Click "New Project" → Select `ai-jewelry-design` repo
+3. **Set Environment Variables**: In project settings, add all variables from `.env.example`
+4. **Deploy**: Click Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Environment Variables for Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Add these in Vercel Dashboard → Settings → Environment Variables:
 
-## Deploy on Vercel
+| Variable | Description |
+|----------|-------------|
+| `GEMINI_API_KEY` | Google Gemini API key |
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase API key |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase auth domain |
+| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | Firebase project ID |
+| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | Firebase storage bucket |
+| `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Firebase sender ID |
+| `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase app ID |
+| `FIREBASE_PROJECT_ID` | Same as above (server-side) |
+| `FIREBASE_CLIENT_EMAIL` | Firebase service account email |
+| `FIREBASE_PRIVATE_KEY` | Firebase private key (with quotes) |
+| `FIREBASE_STORAGE_BUCKET` | Same as above (server-side) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Health Check
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+After deployment, verify: `https://your-app.vercel.app/api/health`
+
+---
+
+## Post-Deployment Checklist
+
+- [ ] Health endpoint returns status: healthy
+- [ ] Homepage loads correctly
+- [ ] Design generation works
+- [ ] Authentication works
+- [ ] Images save to Firebase Storage
+- [ ] Share/Save features work
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/                 # Next.js pages
+│   ├── api/            # API routes
+│   ├── auth/           # Auth pages
+│   └── design/         # Design pages
+├── components/         # React components
+├── contexts/           # React contexts
+├── lib/               # Utilities
+└── types/             # TypeScript types
+```
+
+---
+
+## License
+
+MIT
