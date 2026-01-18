@@ -51,7 +51,7 @@ export function GemCutSelector({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-white/70 mb-3">
+            <label className="block text-sm font-medium text-gray-200 mb-3">
                 What is the shape/cut of your gem?
                 {required && <span className="text-gold ml-1">*</span>}
             </label>
@@ -107,7 +107,7 @@ export function GemCutSelector({
             </div>
 
             {/* Helper Text */}
-            <p className="mt-3 text-sm text-white/40">
+            <p className="mt-3 text-sm text-gray-400">
                 Click on a shape that matches your gemstone
             </p>
 

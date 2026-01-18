@@ -80,7 +80,7 @@ export function GemTypeSelector({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-white/70 mb-2">
+            <label className="block text-sm font-medium text-gray-200 mb-2">
                 What type of gem do you have?
                 {required && <span className="text-gold ml-1">*</span>}
             </label>
@@ -109,13 +109,13 @@ export function GemTypeSelector({
                     )}
                 >
                     <span className={cn(
-                        value ? 'text-white' : 'text-white/40'
+                        value ? 'text-white' : 'text-gray-400'
                     )}>
                         {displayValue}
                     </span>
                     <ChevronDown
                         className={cn(
-                            'w-5 h-5 text-white/40 transition-transform duration-200',
+                            'w-5 h-5 text-gray-400 transition-transform duration-200',
                             isOpen && 'rotate-180'
                         )}
                     />
@@ -184,7 +184,7 @@ export function GemTypeSelector({
             )}
 
             {/* Helper Text */}
-            <p className="mt-2 text-sm text-white/40">
+            <p className="mt-2 text-sm text-gray-400">
                 Select the primary gemstone for your design
             </p>
 

@@ -173,7 +173,7 @@ export default function CreateDesignPage() {
                     <h1 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-white">
                         Create Your Masterpiece
                     </h1>
-                    <p className="text-white/70 text-lg max-w-xl mx-auto">
+                    <p className="text-gray-300 text-lg max-w-xl mx-auto">
                         Transform your vision into stunning jewelry with the power of AI
                     </p>
                 </div>
@@ -203,7 +203,7 @@ export default function CreateDesignPage() {
                                             ) : (
                                                 <StepIcon className={cn(
                                                     'w-5 h-5 md:w-6 md:h-6',
-                                                    status === 'current' ? 'text-navy' : 'text-white/40'
+                                                    status === 'current' ? 'text-navy' : 'text-white/80'
                                                 )} />
                                             )}
                                             {status === 'current' && (
@@ -215,19 +215,19 @@ export default function CreateDesignPage() {
                                         <div className="hidden lg:block text-left">
                                             <p className={cn(
                                                 'text-sm font-medium transition-colors',
-                                                status === 'current' ? 'text-gold' : 'text-white/60'
+                                                status === 'current' ? 'text-gold' : 'text-white'
                                             )}>
                                                 {step.title}
                                             </p>
-                                            <p className="text-xs text-white/30">{step.description}</p>
+                                            <p className="text-xs text-gray-400">{step.description}</p>
                                         </div>
                                     </button>
 
                                     {/* Connector */}
                                     {index < STEPS.length - 1 && (
                                         <div className={cn(
-                                            'w-8 md:w-16 lg:w-24 h-0.5 mx-2 rounded-full transition-colors',
-                                            status === 'complete' ? 'bg-emerald-500' : 'bg-white/10'
+                                            'w-8 md:w-16 lg:w-24 h-1 mx-2 rounded-full transition-colors',
+                                            status === 'complete' ? 'bg-emerald-500' : 'bg-white/20'
                                         )} />
                                     )}
                                 </div>
@@ -259,7 +259,7 @@ export default function CreateDesignPage() {
                                     </div>
                                     <div>
                                         <h2 className="text-2xl font-serif font-bold text-white">Gem Details</h2>
-                                        <p className="text-white/50">Tell us about your precious gemstone</p>
+                                        <p className="text-gray-300">Tell us about your precious gemstone</p>
                                     </div>
                                 </div>
 
@@ -282,7 +282,7 @@ export default function CreateDesignPage() {
                                     </div>
                                     <div>
                                         <h2 className="text-2xl font-serif font-bold text-white">Upload Reference</h2>
-                                        <p className="text-white/50">Add a photo of your gem (optional)</p>
+                                        <p className="text-gray-300">Add a photo of your gem (optional)</p>
                                     </div>
                                 </div>
 
@@ -299,7 +299,7 @@ export default function CreateDesignPage() {
                                     </div>
                                     <div>
                                         <h2 className="text-2xl font-serif font-bold text-white">Design Vision</h2>
-                                        <p className="text-white/50">Describe your dream jewelry piece</p>
+                                        <p className="text-gray-300">Describe your dream jewelry piece</p>
                                     </div>
                                 </div>
 
@@ -319,7 +319,7 @@ export default function CreateDesignPage() {
                                     </div>
                                     <div>
                                         <h2 className="text-2xl font-serif font-bold text-white">Ready to Create</h2>
-                                        <p className="text-white/50">Review your choices and generate designs</p>
+                                        <p className="text-gray-300">Review your choices and generate designs</p>
                                     </div>
                                 </div>
 
@@ -362,8 +362,8 @@ export default function CreateDesignPage() {
                                 className={cn(
                                     'flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all',
                                     currentStep === 1
-                                        ? 'text-white/20 cursor-not-allowed'
-                                        : 'text-white/60 hover:text-white hover:bg-white/5'
+                                        ? 'text-gray-600 cursor-not-allowed'
+                                        : 'text-white hover:bg-white/10 border border-white/30'
                                 )}
                             >
                                 <ChevronLeft className="w-5 h-5" />
@@ -410,7 +410,7 @@ export default function CreateDesignPage() {
                         <h3 className="text-3xl font-serif font-bold text-white mb-2">
                             Creating Magic
                         </h3>
-                        <p className="text-white/50 text-lg mb-6">
+                        <p className="text-gray-300 text-lg mb-6">
                             AI is crafting {numVariations} unique designs...
                         </p>
 
@@ -418,7 +418,7 @@ export default function CreateDesignPage() {
                         <div className="w-64 mx-auto h-1 bg-white/10 rounded-full overflow-hidden">
                             <div className="h-full bg-gradient-to-r from-gold to-amber-500 rounded-full animate-pulse" style={{ width: '60%' }} />
                         </div>
-                        <p className="text-white/30 text-sm mt-4">Usually takes 15-30 seconds</p>
+                        <p className="text-gray-400 text-sm mt-4">Usually takes 15-30 seconds</p>
                     </div>
                 </div>
             )}

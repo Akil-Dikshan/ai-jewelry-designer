@@ -36,7 +36,7 @@ export function TransparencySelector({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-white/70 mb-3">
+            <label className="block text-sm font-medium text-gray-200 mb-3">
                 How see-through is your gem?
                 {required && <span className="text-gold ml-1">*</span>}
             </label>
@@ -70,7 +70,7 @@ export function TransparencySelector({
                         <div
                             className={cn(
                                 'mb-3 transition-colors duration-200',
-                                value === option.value ? 'text-gold' : 'text-white/50'
+                                value === option.value ? 'text-gold' : 'text-gray-400'
                             )}
                         >
                             <TransparencyIcon type={option.value} />
@@ -87,7 +87,7 @@ export function TransparencySelector({
                         </span>
 
                         {/* Description */}
-                        <span className="text-xs text-white/40 mt-1 text-center">
+                        <span className="text-xs text-gray-400 mt-1 text-center">
                             {option.description}
                         </span>
                     </button>
@@ -95,7 +95,7 @@ export function TransparencySelector({
             </div>
 
             {/* Helper Text */}
-            <p className="mt-3 text-sm text-white/40">
+            <p className="mt-3 text-sm text-gray-400">
                 This helps us render light and reflections accurately
             </p>
 

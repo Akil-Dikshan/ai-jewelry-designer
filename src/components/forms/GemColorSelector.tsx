@@ -60,7 +60,7 @@ export function GemColorSelector({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-white/70 mb-2">
+            <label className="block text-sm font-medium text-gray-200 mb-2">
                 What color is your gem?
                 {required && <span className="text-gold ml-1">*</span>}
             </label>
@@ -93,7 +93,7 @@ export function GemColorSelector({
                                 style={{ backgroundColor: displayHex }}
                             />
                         )}
-                        <span className={cn(value ? 'text-white' : 'text-white/40')}>
+                        <span className={cn(value ? 'text-white' : 'text-gray-400')}>
                             {value === 'custom' && localCustomColor
                                 ? `Custom (${localCustomColor})`
                                 : selectedColor?.label || 'Select color...'}
@@ -101,7 +101,7 @@ export function GemColorSelector({
                     </div>
                     <ChevronDown
                         className={cn(
-                            'w-5 h-5 text-white/40 transition-transform duration-200',
+                            'w-5 h-5 text-gray-400 transition-transform duration-200',
                             isOpen && 'rotate-180'
                         )}
                     />
@@ -152,7 +152,7 @@ export function GemColorSelector({
             {/* Custom Color Picker (shown when "Custom" is selected) */}
             {value === 'custom' && (
                 <div className="mt-3 flex items-center gap-3">
-                    <label className="text-sm text-white/50">Pick your color:</label>
+                    <label className="text-sm text-gray-400">Pick your color:</label>
                     <input
                         type="color"
                         value={localCustomColor}
