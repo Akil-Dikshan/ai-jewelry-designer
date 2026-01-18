@@ -60,9 +60,9 @@ export function GemColorSelector({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-navy mb-2">
+            <label className="block text-sm font-medium text-white/70 mb-2">
                 What color is your gem?
-                {required && <span className="text-error ml-1">*</span>}
+                {required && <span className="text-gold ml-1">*</span>}
             </label>
 
             {/* Dropdown Container */}
@@ -77,23 +77,23 @@ export function GemColorSelector({
                     className={cn(
                         'w-full flex items-center justify-between',
                         'px-4 py-3 text-left',
-                        'bg-white border rounded-md',
+                        'bg-white/5 border rounded-xl backdrop-blur-sm',
                         'transition-all duration-200',
-                        'focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
-                        error ? 'border-error' : 'border-light-gray',
-                        disabled ? 'bg-gray-100 cursor-not-allowed opacity-60' : 'cursor-pointer hover:border-slate',
-                        isOpen && 'ring-2 ring-gold border-gold'
+                        'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50',
+                        error ? 'border-red-500/50' : 'border-white/10',
+                        disabled ? 'bg-white/5 cursor-not-allowed opacity-60' : 'cursor-pointer hover:border-white/20 hover:bg-white/10',
+                        isOpen && 'ring-2 ring-gold/50 border-gold/50'
                     )}
                 >
                     <div className="flex items-center gap-3">
                         {/* Color Swatch Preview */}
                         {displayHex && (
                             <div
-                                className="w-6 h-6 rounded-full border border-light-gray"
+                                className="w-6 h-6 rounded-full border border-white/20"
                                 style={{ backgroundColor: displayHex }}
                             />
                         )}
-                        <span className={cn(value ? 'text-navy' : 'text-slate')}>
+                        <span className={cn(value ? 'text-white' : 'text-white/40')}>
                             {value === 'custom' && localCustomColor
                                 ? `Custom (${localCustomColor})`
                                 : selectedColor?.label || 'Select color...'}
@@ -101,7 +101,7 @@ export function GemColorSelector({
                     </div>
                     <ChevronDown
                         className={cn(
-                            'w-5 h-5 text-slate transition-transform duration-200',
+                            'w-5 h-5 text-white/40 transition-transform duration-200',
                             isOpen && 'rotate-180'
                         )}
                     />
@@ -113,10 +113,10 @@ export function GemColorSelector({
                         role="listbox"
                         aria-label="Gem colors"
                         className={cn(
-                            'absolute z-50 w-full mt-1',
-                            'bg-white border border-light-gray rounded-md shadow-lg',
+                            'absolute z-50 w-full mt-2',
+                            'bg-[#1a1a2e]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl',
                             'max-h-60 overflow-y-auto',
-                            'py-1'
+                            'py-2'
                         )}
                     >
                         {GEM_COLORS.map((color) => (
@@ -126,21 +126,21 @@ export function GemColorSelector({
                                 aria-selected={value === color.value}
                                 onClick={() => handleSelect(color.value)}
                                 className={cn(
-                                    'flex items-center gap-3 px-4 py-2 cursor-pointer',
+                                    'flex items-center gap-3 px-4 py-2.5 cursor-pointer',
                                     'transition-colors duration-150',
                                     value === color.value
-                                        ? 'bg-cream text-navy font-medium'
-                                        : 'text-navy hover:bg-cream'
+                                        ? 'bg-gold/20 text-gold font-medium'
+                                        : 'text-white/80 hover:bg-white/10 hover:text-white'
                                 )}
                             >
                                 {/* Color Swatch */}
                                 {color.hex ? (
                                     <div
-                                        className="w-5 h-5 rounded-full border border-light-gray"
+                                        className="w-5 h-5 rounded-full border border-white/20"
                                         style={{ backgroundColor: color.hex }}
                                     />
                                 ) : (
-                                    <div className="w-5 h-5 rounded-full border border-light-gray bg-gradient-to-r from-red-400 via-yellow-400 to-blue-400" />
+                                    <div className="w-5 h-5 rounded-full border border-white/20 bg-gradient-to-r from-red-400 via-yellow-400 to-blue-400" />
                                 )}
                                 <span>{color.label}</span>
                             </li>
@@ -152,25 +152,25 @@ export function GemColorSelector({
             {/* Custom Color Picker (shown when "Custom" is selected) */}
             {value === 'custom' && (
                 <div className="mt-3 flex items-center gap-3">
-                    <label className="text-sm text-slate">Pick your color:</label>
+                    <label className="text-sm text-white/50">Pick your color:</label>
                     <input
                         type="color"
                         value={localCustomColor}
                         onChange={handleCustomColorChange}
                         disabled={disabled}
                         className={cn(
-                            'w-12 h-10 rounded cursor-pointer border border-light-gray',
-                            'focus:outline-none focus:ring-2 focus:ring-gold',
+                            'w-12 h-10 rounded cursor-pointer border border-white/20 bg-transparent',
+                            'focus:outline-none focus:ring-2 focus:ring-gold/50',
                             disabled && 'opacity-60 cursor-not-allowed'
                         )}
                     />
-                    <span className="text-sm text-slate font-mono">{localCustomColor}</span>
+                    <span className="text-sm text-white/60 font-mono">{localCustomColor}</span>
                 </div>
             )}
 
             {/* Error Message */}
             {error && (
-                <p className="mt-2 text-sm text-error" role="alert">
+                <p className="mt-2 text-sm text-red-400" role="alert">
                     {error}
                 </p>
             )}

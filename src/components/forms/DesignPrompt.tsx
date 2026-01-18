@@ -43,9 +43,9 @@ export function DesignPrompt({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-navy mb-2">
+            <label className="block text-sm font-medium text-white/70 mb-2">
                 Describe your dream jewelry design
-                {required && <span className="text-error ml-1">*</span>}
+                {required && <span className="text-gold ml-1">*</span>}
             </label>
 
             {/* Textarea */}
@@ -59,12 +59,12 @@ export function DesignPrompt({
                     placeholder={`Examples:\n– ${EXAMPLE_PROMPTS.join('\n– ')}`}
                     className={cn(
                         'w-full px-4 py-3 resize-none',
-                        'bg-white border rounded-lg',
-                        'text-navy placeholder:text-slate/60',
+                        'bg-white/5 border rounded-xl backdrop-blur-sm',
+                        'text-white placeholder:text-white/30',
                         'transition-all duration-200',
-                        'focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold',
-                        error || isOverLimit ? 'border-error' : 'border-light-gray',
-                        disabled && 'bg-gray-100 cursor-not-allowed opacity-60'
+                        'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50',
+                        error || isOverLimit ? 'border-red-500/50' : 'border-white/10',
+                        disabled && 'opacity-60 cursor-not-allowed'
                     )}
                 />
 
@@ -74,10 +74,10 @@ export function DesignPrompt({
                         'absolute bottom-3 right-3',
                         'text-xs font-medium',
                         isOverLimit
-                            ? 'text-error'
+                            ? 'text-red-400'
                             : isNearLimit
-                                ? 'text-warning'
-                                : 'text-slate'
+                                ? 'text-amber-400'
+                                : 'text-white/40'
                     )}
                 >
                     {characterCount}/{maxLength}
@@ -86,7 +86,7 @@ export function DesignPrompt({
 
             {/* Error Message */}
             {error && (
-                <p className="mt-1 text-sm text-error" role="alert">
+                <p className="mt-1 text-sm text-red-400" role="alert">
                     {error}
                 </p>
             )}
@@ -98,7 +98,7 @@ export function DesignPrompt({
                 className={cn(
                     'flex items-center gap-2 mt-3',
                     'text-sm font-medium text-gold',
-                    'hover:underline focus:outline-none focus:underline'
+                    'hover:text-gold/80 focus:outline-none'
                 )}
             >
                 <Lightbulb className="w-4 h-4" />
@@ -112,13 +112,13 @@ export function DesignPrompt({
 
             {/* Design Tips Content */}
             {showTips && (
-                <div className="mt-3 p-4 bg-cream rounded-lg border border-light-gray">
-                    <p className="text-sm font-medium text-navy mb-2">
+                <div className="mt-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                    <p className="text-sm font-medium text-white/80 mb-2">
                         Tips for better designs:
                     </p>
                     <ul className="space-y-1.5">
                         {DESIGN_TIPS.map((tip, index) => (
-                            <li key={index} className="flex items-start gap-2 text-sm text-slate">
+                            <li key={index} className="flex items-start gap-2 text-sm text-white/60">
                                 <span className="text-gold mt-0.5">•</span>
                                 {tip}
                             </li>

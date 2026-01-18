@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle, Sparkles, RotateCcw, Download, ArrowRight } from 'lucide-react';
+import { CheckCircle, Sparkles, RotateCcw, Download, ArrowRight, Share2, Save } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface RefinementResultProps {
@@ -9,6 +9,8 @@ interface RefinementResultProps {
     onRefineMore: () => void;
     onRevert: () => void;
     onDownload: () => void;
+    onShare?: () => void;
+    onSave?: () => void;
 }
 
 export function RefinementResult({
@@ -17,6 +19,8 @@ export function RefinementResult({
     onRefineMore,
     onRevert,
     onDownload,
+    onShare,
+    onSave,
 }: RefinementResultProps) {
     if (!isVisible) return null;
 
@@ -29,8 +33,8 @@ export function RefinementResult({
                 <Sparkles className="w-4 h-4 text-gold" />
             </div>
 
-            {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Primary Action Buttons */}
+            <div className="grid grid-cols-2 gap-3 mb-3">
                 {/* Accept */}
                 <button
                     type="button"
@@ -60,35 +64,72 @@ export function RefinementResult({
                     <ArrowRight className="w-4 h-4" />
                     Refine further
                 </button>
+            </div>
 
-                {/* Revert */}
-                <button
-                    type="button"
-                    onClick={onRevert}
-                    className={cn(
-                        'flex items-center justify-center gap-2',
-                        'px-4 py-2 rounded-lg',
-                        'text-slate text-sm',
-                        'hover:bg-cream transition-colors'
-                    )}
-                >
-                    <RotateCcw className="w-4 h-4" />
-                    Revert to previous
-                </button>
+            {/* Secondary Action Buttons */}
+            <div className="grid grid-cols-4 gap-2">
+                {/* Save */}
+                {onSave && (
+                    <button
+                        type="button"
+                        onClick={onSave}
+                        className={cn(
+                            'flex items-center justify-center gap-1.5',
+                            'px-3 py-2 rounded-lg',
+                            'text-slate text-sm',
+                            'hover:bg-cream transition-colors'
+                        )}
+                    >
+                        <Save className="w-4 h-4" />
+                        Save
+                    </button>
+                )}
+
+                {/* Share */}
+                {onShare && (
+                    <button
+                        type="button"
+                        onClick={onShare}
+                        className={cn(
+                            'flex items-center justify-center gap-1.5',
+                            'px-3 py-2 rounded-lg',
+                            'text-slate text-sm',
+                            'hover:bg-cream transition-colors'
+                        )}
+                    >
+                        <Share2 className="w-4 h-4" />
+                        Share
+                    </button>
+                )}
 
                 {/* Download */}
                 <button
                     type="button"
                     onClick={onDownload}
                     className={cn(
-                        'flex items-center justify-center gap-2',
-                        'px-4 py-2 rounded-lg',
+                        'flex items-center justify-center gap-1.5',
+                        'px-3 py-2 rounded-lg',
                         'text-slate text-sm',
                         'hover:bg-cream transition-colors'
                     )}
                 >
                     <Download className="w-4 h-4" />
                     Download
+                </button>
+
+                {/* Revert */}
+                <button
+                    type="button"
+                    onClick={onRevert}
+                    className={cn(
+                        'flex items-center justify-center gap-1.5',
+                        'px-3 py-2 rounded-lg',
+                        'text-slate text-sm',
+                        'hover:bg-cream transition-colors'
+                    )}
+                >
+                    <RotateCcw className="w-4 h-4" />
+                    Revert
                 </button>
             </div>
         </div>

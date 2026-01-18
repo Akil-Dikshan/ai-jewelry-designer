@@ -9,14 +9,14 @@
   --color-navy: #0A1128;
   --color-gold: #D4AF37;
   --color-cream: #F5F5F0;
-  
+
   /* Secondary Colors */
   --color-slate: #4A5568;
   --color-light-gray: #E2E8F0;
   --color-success: #10B981;
   --color-error: #EF4444;
   --color-warning: #F59E0B;
-  
+
   /* Gemstone Accent Colors */
   --color-diamond: #E8F4F8;
   --color-sapphire: #0F52BA;
@@ -32,19 +32,19 @@
   /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
+
   /* Primary */
   --color-navy: #0A1128;
   --color-gold: #D4AF37;
   --color-cream: #F5F5F0;
-  
+
   /* Secondary */
   --color-slate: #4A5568;
   --color-light-gray: #E2E8F0;
   --color-success: #10B981;
   --color-error: #EF4444;
   --color-warning: #F59E0B;
-  
+
   /* Gemstone Accents */
   --color-diamond: #E8F4F8;
   --color-sapphire: #0F52BA;
@@ -54,7 +54,7 @@
   /* Typography */
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
-  
+
   /* Spacing (8px base) */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -84,16 +84,65 @@ body {
 }
 
 /* Headings use serif font */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif);
   line-height: 1.2;
-  color: var(--color-navy);
 }
 
 /* Focus styles using Luxe Gold */
 *:focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 2px;
+}
+
+/* Fix Tailwind v4 misconfigured max-width utilities */
+.max-w-xs {
+  max-width: 320px !important;
+}
+
+.max-w-sm {
+  max-width: 384px !important;
+}
+
+.max-w-md {
+  max-width: 448px !important;
+}
+
+.max-w-lg {
+  max-width: 512px !important;
+}
+
+.max-w-xl {
+  max-width: 576px !important;
+}
+
+.max-w-2xl {
+  max-width: 672px !important;
+}
+
+.max-w-3xl {
+  max-width: 768px !important;
+}
+
+.max-w-4xl {
+  max-width: 896px !important;
+}
+
+.max-w-5xl {
+  max-width: 1024px !important;
+}
+
+.max-w-6xl {
+  max-width: 1152px !important;
+}
+
+.max-w-7xl {
+  max-width: 1280px !important;
 }
 
 /* ===================================================================
@@ -171,4 +220,346 @@ h1, h2, h3, h4, h5, h6 {
 
 .input-field.error {
   border-color: var(--color-error);
+}
+
+/* ===================================================================
+   ANIMATIONS & TRANSITIONS
+   =================================================================== */
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Slide Up Animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+/* Staggered Animation Delays */
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animate-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animate-delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Skeleton Loading Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+      var(--color-light-gray) 25%,
+      #f0f0f0 50%,
+      var(--color-light-gray) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* Pulse Animation for Loading States */
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Scale on Hover */
+.hover-scale {
+  transition: transform 0.2s ease-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Lift on Hover (Shadow) */
+.hover-lift {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Page Transition */
+.page-transition {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Toast Animations */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.toast-enter {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.toast-exit {
+  animation: slideOutRight 0.3s ease-out forwards;
+}
+
+/* Button Press Effect */
+.btn-press {
+  transition: transform 0.1s ease-out;
+}
+
+.btn-press:active {
+  transform: scale(0.95);
+}
+
+/* Focus Ring for Accessibility */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===================================================================
+   MOBILE RESPONSIVENESS
+   =================================================================== */
+
+/* Touch-friendly minimum sizes */
+@media (max-width: 768px) {
+
+  .btn-primary,
+  .btn-secondary {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 24px;
+  }
+
+  .input-field {
+    min-height: 44px;
+    font-size: 16px;
+    /* Prevents iOS zoom on focus */
+  }
+
+  /* Mobile-first typography scaling */
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Reduce padding on mobile */
+  .card {
+    padding: 16px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ===================================================================
+   ACCESSIBILITY
+   =================================================================== */
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--color-navy);
+  color: white;
+  padding: 12px 24px;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* High contrast selection */
+::selection {
+  background-color: var(--color-gold);
+  color: var(--color-navy);
+}
+
+/* Ensure links are distinguishable */
+a {
+  text-decoration-skip-ink: auto;
+}
+
+/* Better focus for checkboxes and radios */
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Disabled state styling */
+[disabled],
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===================================================================
+   UTILITY CLASSES
+   =================================================================== */
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Truncate text */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

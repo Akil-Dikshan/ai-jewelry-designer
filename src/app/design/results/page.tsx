@@ -2,8 +2,11 @@
 
 import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Gem, ArrowLeft } from 'lucide-react';
+import { Gem, ArrowLeft, Save, LogIn, Check } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/auth-context';
+import { saveDesign } from '@/lib/firestore';
+import { UserMenu } from '@/components/layout';
 import {
     DesignSummary,
     DesignGallery,
@@ -48,25 +51,35 @@ function ResultsContent() {
     const [favorites, setFavorites] = useState<string[]>([]);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
+    const [isSaving, setIsSaving] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
-    // Simulate loading design data
+    const { user } = useAuth();
+
+    // Load design data from sessionStorage
     useEffect(() => {
         const loadDesign = async () => {
             setIsLoading(true);
             setError(null);
 
             try {
-                // Simulate API call
-                await new Promise((resolve) => setTimeout(resolve, 500));
-
-                if (!designId) {
-                    // Use mock data if no ID provided (for development)
-                    setDesignData(MOCK_DESIGN_RESPONSE);
+                if (designId) {
+                    // Try to load from sessionStorage
+                    const storedData = localStorage.getItem(designId);
+                    if (storedData) {
+                        const parsedData = JSON.parse(storedData);
+                        setDesignData(parsedData);
+                    } else {
+                        // Fallback to mock data if no stored data
+                        console.warn('No stored design data found for:', designId);
+                        setDesignData(MOCK_DESIGN_RESPONSE);
+                    }
                 } else {
-                    // In production, fetch from API
+                    // Use mock data if no ID provided (for development)
                     setDesignData(MOCK_DESIGN_RESPONSE);
                 }
             } catch (err) {
+                console.error('Error loading design:', err);
                 setError('Failed to load your designs. Please try again.');
             } finally {
                 setIsLoading(false);
@@ -119,6 +132,35 @@ function ResultsContent() {
         router.push('/design/create');
     }, [router]);
 
+    const handleSaveDesign = async () => {
+        if (!user || !designData) return;
+
+        setIsSaving(true);
+        try {
+            // Add timeout to prevent hanging
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Save timed out')), 15000)
+            );
+
+            const savePromise = saveDesign(user.uid, {
+                designId: designId || 'unknown',
+                images: designData.images,
+                gemData: designData.gemData,
+                prompt: designData.prompt,
+                materials: designData.materials,
+            });
+
+            await Promise.race([savePromise, timeoutPromise]);
+            setIsSaved(true);
+        } catch (err) {
+            console.error('Error saving design:', err);
+            const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+            alert(`Failed to save design: ${errorMessage}. Please check if Firestore is enabled in Firebase Console.`);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     // Loading state
     if (isLoading) {
         return (
@@ -158,13 +200,16 @@ function ResultsContent() {
                         <Gem className="w-8 h-8 text-gold" />
                         <h1 className="text-xl font-serif font-semibold">AI Jewelry Designer</h1>
                     </div>
-                    <Link
-                        href="/design/create"
-                        className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        New Design
-                    </Link>
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="/design/create"
+                            className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
+                        >
+                            <ArrowLeft className="w-4 h-4" />
+                            New Design
+                        </Link>
+                        <UserMenu />
+                    </div>
                 </div>
             </header>
 
@@ -198,7 +243,62 @@ function ResultsContent() {
                 </section>
 
                 {/* Call to Action */}
-                <CallToAction selectedImageId={selectedImageId} />
+                <CallToAction
+                    selectedImageId={selectedImageId}
+                    selectedImageUrl={designData.images.find(img => img.imageId === selectedImageId)?.imageUrl}
+                    designId={designId}
+                />
+
+                {/* Save Design Section */}
+                <section className="bg-white rounded-xl p-6 shadow-sm border border-light-gray">
+                    <h3 className="text-lg font-serif font-semibold text-navy mb-4">
+                        Save This Design
+                    </h3>
+                    {user ? (
+                        <div className="flex items-center gap-4">
+                            {isSaved ? (
+                                <div className="flex items-center gap-2 text-success">
+                                    <Check className="w-5 h-5" />
+                                    <span>Design saved to your collection!</span>
+                                    <Link
+                                        href="/dashboard"
+                                        className="text-gold hover:underline ml-2"
+                                    >
+                                        View Dashboard
+                                    </Link>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={handleSaveDesign}
+                                    disabled={isSaving}
+                                    className="btn-primary flex items-center gap-2 disabled:opacity-50"
+                                >
+                                    <Save className="w-5 h-5" />
+                                    {isSaving ? 'Saving...' : 'Save to My Collection'}
+                                </button>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-4 flex-wrap">
+                            <p className="text-slate">
+                                Sign in to save this design to your collection
+                            </p>
+                            <Link
+                                href="/auth/sign-in"
+                                className="btn-secondary flex items-center gap-2"
+                            >
+                                <LogIn className="w-5 h-5" />
+                                Sign In
+                            </Link>
+                            <Link
+                                href="/auth/sign-up"
+                                className="text-gold hover:underline"
+                            >
+                                Create Account
+                            </Link>
+                        </div>
+                    )}
+                </section>
 
                 {/* Disclaimer */}
                 <DesignDisclaimer />

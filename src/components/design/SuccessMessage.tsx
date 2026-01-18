@@ -27,12 +27,9 @@ export function SuccessMessage({
             </h2>
 
             {/* Message */}
-            <p className="text-slate max-w-lg mx-auto">
+            <p className="text-slate mx-auto leading-relaxed" style={{ maxWidth: '512px' }}>
                 {message || (
-                    <>
-                        We&apos;ve created <span className="font-medium text-navy">{numVariations} unique jewelry concepts</span> based on your specifications.
-                        Select your favorite to refine or download.
-                    </>
+                    `We've created ${numVariations} unique jewelry concepts based on your specifications. Select your favorite to refine or download.`
                 )}
             </p>
 

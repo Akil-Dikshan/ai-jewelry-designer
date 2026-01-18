@@ -100,9 +100,9 @@ export function ImageUpload({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-navy mb-2">
+            <label className="block text-sm font-medium text-white/70 mb-2">
                 Upload a photo of your gem
-                <span className="text-slate font-normal ml-1">(optional but recommended)</span>
+                <span className="text-white/40 font-normal ml-1">(optional but recommended)</span>
             </label>
 
             {/* Hidden File Input */}
@@ -126,34 +126,34 @@ export function ImageUpload({
                     onDragLeave={handleDragLeave}
                     className={cn(
                         'relative flex flex-col items-center justify-center',
-                        'p-8 rounded-lg border-2 border-dashed',
+                        'p-8 rounded-xl border-2 border-dashed',
                         'transition-all duration-200 cursor-pointer',
                         disabled && 'opacity-60 cursor-not-allowed',
-                        displayError && 'border-error',
+                        displayError && 'border-red-500/50',
                         isDragging
-                            ? 'border-gold bg-cream'
-                            : 'border-light-gray bg-white hover:border-gold hover:bg-cream/50'
+                            ? 'border-gold/50 bg-gold/10'
+                            : 'border-white/20 bg-white/5 hover:border-gold/30 hover:bg-white/10'
                     )}
                 >
                     <Upload
                         className={cn(
                             'w-12 h-12 mb-3',
-                            isDragging ? 'text-gold' : 'text-slate'
+                            isDragging ? 'text-gold' : 'text-white/40'
                         )}
                     />
-                    <p className="text-sm font-medium text-navy mb-1">
+                    <p className="text-sm font-medium text-white mb-1">
                         Drag and drop your image here
                     </p>
-                    <p className="text-xs text-slate mb-3">
+                    <p className="text-xs text-white/50 mb-3">
                         or click to browse files
                     </p>
-                    <p className="text-xs text-slate">
+                    <p className="text-xs text-white/40">
                         JPG, PNG, or WebP • Max {formatFileSize(MAX_FILE_SIZE)}
                     </p>
                 </div>
             ) : (
                 // Image Preview
-                <div className="relative rounded-lg border border-light-gray bg-white p-4">
+                <div className="relative rounded-xl border border-white/10 bg-white/5 p-4">
                     <div className="flex items-start gap-4">
                         {/* Thumbnail */}
                         <div className="relative w-24 h-24 flex-shrink-0">
@@ -167,13 +167,13 @@ export function ImageUpload({
                         {/* File Info */}
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                                <ImageIcon className="w-4 h-4 text-slate" />
-                                <p className="text-sm font-medium text-navy truncate">
+                                <ImageIcon className="w-4 h-4 text-white/50" />
+                                <p className="text-sm font-medium text-white truncate">
                                     {value?.name || 'Uploaded image'}
                                 </p>
                             </div>
                             {value && (
-                                <p className="text-xs text-slate mb-3">
+                                <p className="text-xs text-white/50 mb-3">
                                     {formatFileSize(value.size)}
                                 </p>
                             )}
@@ -186,8 +186,8 @@ export function ImageUpload({
                                     disabled={disabled}
                                     className={cn(
                                         'px-3 py-1.5 text-xs font-medium',
-                                        'bg-cream text-navy rounded-md',
-                                        'hover:bg-light-gray transition-colors',
+                                        'bg-white/10 text-white rounded-lg',
+                                        'hover:bg-white/20 transition-colors',
                                         disabled && 'opacity-60 cursor-not-allowed'
                                     )}
                                 >
@@ -199,7 +199,7 @@ export function ImageUpload({
                                     disabled={disabled}
                                     className={cn(
                                         'px-3 py-1.5 text-xs font-medium',
-                                        'text-error hover:bg-red-50 rounded-md',
+                                        'text-red-400 hover:bg-red-500/10 rounded-lg',
                                         'transition-colors',
                                         disabled && 'opacity-60 cursor-not-allowed'
                                     )}
@@ -216,7 +216,7 @@ export function ImageUpload({
                             disabled={disabled}
                             className={cn(
                                 'absolute top-2 right-2 p-1 rounded-full',
-                                'text-slate hover:text-error hover:bg-red-50',
+                                'text-white/50 hover:text-red-400 hover:bg-red-500/10',
                                 'transition-colors',
                                 disabled && 'opacity-60 cursor-not-allowed'
                             )}
@@ -229,13 +229,13 @@ export function ImageUpload({
             )}
 
             {/* Helper Text */}
-            <p className="mt-2 text-sm text-slate">
+            <p className="mt-2 text-sm text-white/40">
                 This helps our AI create more accurate designs
             </p>
 
             {/* Error Message */}
             {displayError && (
-                <div className="mt-2 flex items-center gap-1.5 text-sm text-error" role="alert">
+                <div className="mt-2 flex items-center gap-1.5 text-sm text-red-400" role="alert">
                     <AlertCircle className="w-4 h-4" />
                     {displayError}
                 </div>
