@@ -100,7 +100,7 @@ export default function SignUpPage() {
                                 id="name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-lg border border-light-gray bg-white text-navy placeholder:text-slate/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                                 placeholder="Your name"
                             />
                         </div>
@@ -115,7 +115,7 @@ export default function SignUpPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-lg border border-light-gray bg-white text-navy placeholder:text-slate/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                                 placeholder="you@example.com"
                             />
                         </div>
@@ -132,7 +132,7 @@ export default function SignUpPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     minLength={6}
-                                    className="input-field pr-10"
+                                    className="w-full px-4 py-3 pr-12 rounded-lg border border-light-gray bg-white text-navy placeholder:text-slate/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                                     placeholder="At least 6 characters"
                                 />
                                 <button
@@ -155,7 +155,7 @@ export default function SignUpPage() {
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-lg border border-light-gray bg-white text-navy placeholder:text-slate/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                                 placeholder="Confirm your password"
                             />
                         </div>

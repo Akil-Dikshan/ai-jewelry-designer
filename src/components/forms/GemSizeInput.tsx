@@ -78,7 +78,7 @@ export function GemSizeInput({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-gray-200 mb-3">
+            <label className="block text-sm font-medium text-white/70 mb-3">
                 What size is your gem?
                 {required && <span className="text-gold ml-1">*</span>}
             </label>
@@ -126,7 +126,7 @@ export function GemSizeInput({
                             </div>
                             <div>
                                 <span className="font-medium text-white">{size.label}</span>
-                                <p className="text-sm text-gray-400 mt-0.5">{size.description}</p>
+                                <p className="text-sm text-white/50 mt-0.5">{size.description}</p>
                             </div>
                         </label>
                     ))}
@@ -161,14 +161,14 @@ export function GemSizeInput({
             {/* Advanced Dimensions Input */}
             {isAdvancedOpen && (
                 <div className="mt-4 p-4 bg-white/5 rounded-xl border border-white/10">
-                    <p className="text-sm text-gray-400 mb-4">
+                    <p className="text-sm text-white/50 mb-4">
                         Enter your gem dimensions in millimeters
                     </p>
 
                     <div className="grid grid-cols-3 gap-4 mb-4">
                         {/* Length */}
                         <div>
-                            <label className="block text-xs font-medium text-gray-300 mb-1">
+                            <label className="block text-xs font-medium text-white/60 mb-1">
                                 Length (mm)
                             </label>
                             <input
@@ -192,7 +192,7 @@ export function GemSizeInput({
 
                         {/* Width */}
                         <div>
-                            <label className="block text-xs font-medium text-gray-300 mb-1">
+                            <label className="block text-xs font-medium text-white/60 mb-1">
                                 Width (mm)
                             </label>
                             <input
@@ -216,7 +216,7 @@ export function GemSizeInput({
 
                         {/* Height */}
                         <div>
-                            <label className="block text-xs font-medium text-gray-300 mb-1">
+                            <label className="block text-xs font-medium text-white/60 mb-1">
                                 Height (mm)
                             </label>
                             <input
@@ -241,7 +241,7 @@ export function GemSizeInput({
 
                     {/* Carat Weight (Optional) */}
                     <div className="max-w-[200px]">
-                        <label className="block text-xs font-medium text-gray-300 mb-1">
+                        <label className="block text-xs font-medium text-white/60 mb-1">
                             Carat Weight (optional)
                         </label>
                         <input

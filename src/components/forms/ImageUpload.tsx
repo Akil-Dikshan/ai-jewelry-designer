@@ -100,9 +100,9 @@ export function ImageUpload({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-gray-200 mb-2">
+            <label className="block text-sm font-medium text-white/70 mb-2">
                 Upload a photo of your gem
-                <span className="text-gray-400 font-normal ml-1">(optional but recommended)</span>
+                <span className="text-white/40 font-normal ml-1">(optional but recommended)</span>
             </label>
 
             {/* Hidden File Input */}
@@ -138,16 +138,16 @@ export function ImageUpload({
                     <Upload
                         className={cn(
                             'w-12 h-12 mb-3',
-                            isDragging ? 'text-gold' : 'text-gray-400'
+                            isDragging ? 'text-gold' : 'text-white/40'
                         )}
                     />
                     <p className="text-sm font-medium text-white mb-1">
                         Drag and drop your image here
                     </p>
-                    <p className="text-xs text-gray-400 mb-3">
+                    <p className="text-xs text-white/50 mb-3">
                         or click to browse files
                     </p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-white/40">
                         JPG, PNG, or WebP • Max {formatFileSize(MAX_FILE_SIZE)}
                     </p>
                 </div>
@@ -167,13 +167,13 @@ export function ImageUpload({
                         {/* File Info */}
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                                <ImageIcon className="w-4 h-4 text-gray-400" />
+                                <ImageIcon className="w-4 h-4 text-white/50" />
                                 <p className="text-sm font-medium text-white truncate">
                                     {value?.name || 'Uploaded image'}
                                 </p>
                             </div>
                             {value && (
-                                <p className="text-xs text-gray-400 mb-3">
+                                <p className="text-xs text-white/50 mb-3">
                                     {formatFileSize(value.size)}
                                 </p>
                             )}
@@ -216,7 +216,7 @@ export function ImageUpload({
                             disabled={disabled}
                             className={cn(
                                 'absolute top-2 right-2 p-1 rounded-full',
-                                'text-gray-400 hover:text-red-400 hover:bg-red-500/10',
+                                'text-white/50 hover:text-red-400 hover:bg-red-500/10',
                                 'transition-colors',
                                 disabled && 'opacity-60 cursor-not-allowed'
                             )}
@@ -229,7 +229,7 @@ export function ImageUpload({
             )}
 
             {/* Helper Text */}
-            <p className="mt-2 text-sm text-gray-400">
+            <p className="mt-2 text-sm text-white/40">
                 This helps our AI create more accurate designs
             </p>
 

@@ -14,6 +14,7 @@ import {
     ComparisonView,
     RefinementProgress,
     RefinementResult,
+    ShareModal,
 } from '@/components/refine';
 import { Lightbox } from '@/components/design';
 
@@ -37,6 +38,8 @@ function RefineContent() {
     const [showResult, setShowResult] = useState(false);
     const [showComparison, setShowComparison] = useState(false);
     const [showLightbox, setShowLightbox] = useState(false);
+    const [showShareModal, setShowShareModal] = useState(false);
+    const [shareUrl, setShareUrl] = useState('');
     const [refinementsRemaining, setRefinementsRemaining] = useState(MAX_REFINEMENTS);
     const [advancedOptions, setAdvancedOptions] = useState({
         strength: 3,
@@ -53,7 +56,7 @@ function RefineContent() {
         // If no imageUrl in URL, try to get from sessionStorage
         if (!originalImageUrl && designId) {
             try {
-                const storedData = sessionStorage.getItem(designId);
+                const storedData = localStorage.getItem(designId);
                 if (storedData) {
                     const parsedData = JSON.parse(storedData);
                     // Find the image matching imageId, or use first image
@@ -141,8 +144,43 @@ function RefineContent() {
     }, [versions]);
 
     const handleAccept = useCallback(() => {
-        router.push('/design/results');
-    }, [router]);
+        // Save the refined version to localStorage
+        if (designId && currentVersion && imageId) {
+            try {
+                const storedData = localStorage.getItem(designId);
+                if (storedData) {
+                    const parsedData = JSON.parse(storedData);
+                    // Update the image in the images array with the refined version
+                    if (parsedData.images) {
+                        const imageIndex = parsedData.images.findIndex(
+                            (img: { imageId: string }) => img.imageId === imageId
+                        );
+                        if (imageIndex >= 0) {
+                            // Replace with refined version
+                            parsedData.images[imageIndex] = {
+                                ...parsedData.images[imageIndex],
+                                imageUrl: currentVersion.imageUrl,
+                                isRefined: true,
+                                refinedAt: new Date().toISOString(),
+                            };
+                        } else {
+                            // Add as a new image
+                            parsedData.images.push({
+                                imageId: `refined-${Date.now()}`,
+                                imageUrl: currentVersion.imageUrl,
+                                isRefined: true,
+                                refinedAt: new Date().toISOString(),
+                            });
+                        }
+                        localStorage.setItem(designId, JSON.stringify(parsedData));
+                    }
+                }
+            } catch (error) {
+                console.error('Error saving refined design:', error);
+            }
+        }
+        router.push(designId ? `/design/results?id=${designId}` : '/design/results');
+    }, [router, designId, currentVersion, imageId]);
 
     const handleRefineMore = useCallback(() => {
         setShowResult(false);
@@ -158,15 +196,69 @@ function RefineContent() {
         }
     }, [versions]);
 
-    const handleDownload = useCallback(() => {
+    const handleDownload = useCallback(async () => {
         if (currentVersion) {
-            const link = document.createElement('a');
-            link.href = currentVersion.imageUrl;
-            link.download = `refined-design-${currentVersion.id}.png`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            try {
+                // Fetch image as blob to handle cross-origin
+                const response = await fetch(currentVersion.imageUrl);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `jewelry-design-${currentVersion.id}-${Date.now()}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                // Fallback for same-origin images
+                const link = document.createElement('a');
+                link.href = currentVersion.imageUrl;
+                link.download = `jewelry-design-${currentVersion.id}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         }
+    }, [currentVersion]);
+
+    // Save design to localStorage
+    const handleSave = useCallback(() => {
+        if (!currentVersion) return;
+
+        const savedDesigns = JSON.parse(localStorage.getItem('savedDesigns') || '[]');
+        const newDesign = {
+            id: `design-${Date.now()}`,
+            imageUrl: currentVersion.imageUrl,
+            label: currentVersion.label,
+            savedAt: new Date().toISOString(),
+            versions: versions,
+        };
+
+        savedDesigns.push(newDesign);
+        localStorage.setItem('savedDesigns', JSON.stringify(savedDesigns));
+
+        alert('Design saved! View it in My Designs.');
+    }, [currentVersion, versions]);
+
+    // Share design - generate unique link
+    const handleShare = useCallback(() => {
+        if (!currentVersion) return;
+
+        const shareId = `share-${Date.now()}`;
+        const shareData = {
+            id: shareId,
+            imageUrl: currentVersion.imageUrl,
+            label: currentVersion.label,
+            sharedAt: new Date().toISOString(),
+        };
+
+        // Store in localStorage for the shared page to access
+        localStorage.setItem(shareId, JSON.stringify(shareData));
+
+        const url = `${window.location.origin}/design/shared?id=${shareId}`;
+        setShareUrl(url);
+        setShowShareModal(true);
     }, [currentVersion]);
 
     return (
@@ -179,7 +271,7 @@ function RefineContent() {
                         <h1 className="text-xl font-serif font-semibold">AI Jewelry Designer</h1>
                     </div>
                     <Link
-                        href="/design/results"
+                        href={designId ? `/design/results?id=${designId}` : '/design/results'}
                         className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
@@ -255,6 +347,8 @@ function RefineContent() {
                             onRefineMore={handleRefineMore}
                             onRevert={handleRevert}
                             onDownload={handleDownload}
+                            onShare={handleShare}
+                            onSave={handleSave}
                         />
 
                         {/* Refinement Input */}
@@ -332,6 +426,14 @@ function RefineContent() {
                     if (idx < versions.length - 1) setCurrentVersionId(versions[idx + 1].id);
                 }}
                 onDownload={handleDownload}
+            />
+
+            {/* Share Modal */}
+            <ShareModal
+                isOpen={showShareModal}
+                onClose={() => setShowShareModal(false)}
+                shareUrl={shareUrl}
+                imageUrl={currentVersion?.imageUrl || ''}
             />
         </div>
     );

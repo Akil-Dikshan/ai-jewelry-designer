@@ -43,7 +43,7 @@ export function DesignPrompt({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-gray-200 mb-2">
+            <label className="block text-sm font-medium text-white/70 mb-2">
                 Describe your dream jewelry design
                 {required && <span className="text-gold ml-1">*</span>}
             </label>
@@ -77,7 +77,7 @@ export function DesignPrompt({
                             ? 'text-red-400'
                             : isNearLimit
                                 ? 'text-amber-400'
-                                : 'text-gray-400'
+                                : 'text-white/40'
                     )}
                 >
                     {characterCount}/{maxLength}
@@ -118,7 +118,7 @@ export function DesignPrompt({
                     </p>
                     <ul className="space-y-1.5">
                         {DESIGN_TIPS.map((tip, index) => (
-                            <li key={index} className="flex items-start gap-2 text-sm text-gray-300">
+                            <li key={index} className="flex items-start gap-2 text-sm text-white/60">
                                 <span className="text-gold mt-0.5">•</span>
                                 {tip}
                             </li>

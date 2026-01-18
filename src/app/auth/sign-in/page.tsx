@@ -87,7 +87,7 @@ export default function SignInPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="input-field"
+                                className="w-full px-4 py-3 rounded-lg border border-light-gray bg-white text-navy placeholder:text-slate/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                                 placeholder="you@example.com"
                             />
                         </div>
@@ -103,7 +103,7 @@ export default function SignInPage() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
-                                    className="input-field pr-10"
+                                    className="w-full px-4 py-3 pr-12 rounded-lg border border-light-gray bg-white text-navy placeholder:text-slate/50 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
                                     placeholder="Your password"
                                 />
                                 <button

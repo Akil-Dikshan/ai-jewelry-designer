@@ -42,11 +42,11 @@ export function GenerateButton({
     };
 
     return (
-        <div className="w-full space-y-4">
+        <div className="w-full space-y-6">
             {/* Variations Selector */}
-            <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-navy">
-                    Number of design variations:
+            <div className="flex items-center justify-center gap-4">
+                <label className="text-sm font-medium text-white/70">
+                    Variations:
                 </label>
                 <div className="flex gap-2">
                     {([2, 3, 4] as const).map((num) => (
@@ -56,12 +56,12 @@ export function GenerateButton({
                             onClick={() => onVariationsChange(num)}
                             disabled={isLoading}
                             className={cn(
-                                'w-10 h-10 rounded-md font-medium text-sm',
+                                'w-10 h-10 rounded-lg font-medium text-sm',
                                 'transition-all duration-200',
-                                'focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2',
+                                'focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-[#0a0a0f]',
                                 numVariations === num
                                     ? 'bg-gold text-navy'
-                                    : 'bg-white border border-light-gray text-slate hover:border-gold',
+                                    : 'bg-white/10 border border-white/20 text-white hover:border-gold/50',
                                 isLoading && 'opacity-60 cursor-not-allowed'
                             )}
                         >
@@ -71,45 +71,47 @@ export function GenerateButton({
                 </div>
             </div>
 
-            {/* Generate Button */}
-            <button
-                type="button"
-                onClick={handleClick}
-                disabled={disabled || isLoading}
-                className={cn(
-                    'w-full flex items-center justify-center gap-3',
-                    'px-8 py-4 rounded-lg',
-                    'font-semibold text-lg',
-                    'transition-all duration-300',
-                    'focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2',
-                    disabled || isLoading
-                        ? 'bg-light-gray text-slate cursor-not-allowed'
-                        : 'bg-gold text-navy hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl'
-                )}
-            >
-                {isLoading ? (
-                    <>
-                        <Loader2 className="w-6 h-6 animate-spin" />
-                        <span>{LOADING_MESSAGES[loadingStep]}</span>
-                    </>
-                ) : (
-                    <>
-                        <Sparkles className="w-6 h-6" />
-                        <span>Generate My Design</span>
-                    </>
-                )}
-            </button>
+            {/* Generate Button - Centered and button-like */}
+            <div className="flex justify-center">
+                <button
+                    type="button"
+                    onClick={handleClick}
+                    disabled={disabled || isLoading}
+                    className={cn(
+                        'flex items-center justify-center gap-3',
+                        'px-12 py-4 rounded-xl',
+                        'font-semibold text-lg',
+                        'transition-all duration-300',
+                        'focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-[#0a0a0f]',
+                        disabled || isLoading
+                            ? 'bg-white/10 text-white/40 cursor-not-allowed'
+                            : 'bg-gradient-to-r from-gold to-amber-600 text-navy hover:shadow-lg hover:shadow-gold/30 hover:scale-[1.02] active:scale-[0.98]'
+                    )}
+                >
+                    {isLoading ? (
+                        <>
+                            <Loader2 className="w-6 h-6 animate-spin" />
+                            <span>{LOADING_MESSAGES[loadingStep]}</span>
+                        </>
+                    ) : (
+                        <>
+                            <Sparkles className="w-6 h-6" />
+                            <span>Generate My Design</span>
+                        </>
+                    )}
+                </button>
+            </div>
 
             {/* Estimated Time */}
             {!isLoading && (
-                <p className="text-center text-sm text-slate">
+                <p className="text-center text-sm text-white/40">
                     This will take 10-15 seconds
                 </p>
             )}
 
             {/* Loading Progress Bar */}
             {isLoading && (
-                <div className="relative h-2 bg-light-gray rounded-full overflow-hidden">
+                <div className="relative h-2 bg-white/10 rounded-full overflow-hidden max-w-md mx-auto">
                     <div
                         className="absolute inset-y-0 left-0 bg-gold rounded-full transition-all duration-1000"
                         style={{
@@ -119,13 +121,13 @@ export function GenerateButton({
                 </div>
             )}
 
-            {/* Disclaimer */}
-            <div className="flex items-start gap-2 p-3 bg-cream rounded-lg border border-light-gray">
-                <AlertTriangle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
-                <p className="text-xs text-slate">
-                    <span className="font-medium text-navy">Important:</span> These are concept renderings,
-                    not final production designs. Actual jewelry may vary. Consult a professional
-                    jeweler for production-ready designs.
+            {/* Disclaimer - Clear, readable, no glass effect */}
+            <div className="flex items-start gap-3 p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-white/80">
+                    <span className="font-semibold text-amber-400">Important:</span>{' '}
+                    These are concept renderings, not final production designs. Actual jewelry may vary.
+                    Consult a professional jeweler for production-ready designs.
                 </p>
             </div>
         </div>

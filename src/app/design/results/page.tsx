@@ -65,7 +65,7 @@ function ResultsContent() {
             try {
                 if (designId) {
                     // Try to load from sessionStorage
-                    const storedData = sessionStorage.getItem(designId);
+                    const storedData = localStorage.getItem(designId);
                     if (storedData) {
                         const parsedData = JSON.parse(storedData);
                         setDesignData(parsedData);
