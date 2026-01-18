@@ -1,6 +1,17 @@
 'use client';
 
 import React from 'react';
+import {
+    Circle,
+    Diamond,
+    Square,
+    Pentagon,
+    Hexagon,
+    Heart,
+    RectangleHorizontal,
+    Octagon,
+    Triangle
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { GEM_CUTS, type GemCutId } from '@/constants/gemCuts';
 
@@ -12,84 +23,22 @@ interface GemCutSelectorProps {
     required?: boolean;
 }
 
-// Placeholder SVG icons for gem cuts (geometric representations)
+// Map gem cuts to Lucide icons
 const CutIcon = ({ cutId }: { cutId: string }) => {
     const iconMap: Record<string, React.ReactNode> = {
-        'round-brilliant': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" strokeWidth="2" />
-                <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="20" y1="4" x2="20" y2="12" stroke="currentColor" strokeWidth="1" />
-                <line x1="20" y1="28" x2="20" y2="36" stroke="currentColor" strokeWidth="1" />
-                <line x1="4" y1="20" x2="12" y2="20" stroke="currentColor" strokeWidth="1" />
-                <line x1="28" y1="20" x2="36" y2="20" stroke="currentColor" strokeWidth="1" />
-            </svg>
-        ),
-        'oval': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <ellipse cx="20" cy="20" rx="16" ry="12" fill="none" stroke="currentColor" strokeWidth="2" />
-                <ellipse cx="20" cy="20" rx="8" ry="6" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-        ),
-        'cushion': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <rect x="6" y="6" width="28" height="28" rx="6" fill="none" stroke="currentColor" strokeWidth="2" />
-                <rect x="12" y="12" width="16" height="16" rx="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-        ),
-        'pear': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <path d="M20 4 C8 16, 8 32, 20 36 C32 32, 32 16, 20 4" fill="none" stroke="currentColor" strokeWidth="2" />
-                <circle cx="20" cy="24" r="6" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-        ),
-        'emerald': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <polygon points="8,10 32,10 36,14 36,26 32,30 8,30 4,26 4,14" fill="none" stroke="currentColor" strokeWidth="2" />
-                <rect x="12" y="14" width="16" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-        ),
-        'marquise': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <ellipse cx="20" cy="20" rx="8" ry="16" fill="none" stroke="currentColor" strokeWidth="2" />
-                <ellipse cx="20" cy="20" rx="4" ry="8" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-        ),
-        'asscher': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <rect x="6" y="6" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" />
-                <rect x="12" y="12" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="6" y1="6" x2="12" y2="12" stroke="currentColor" strokeWidth="1" />
-                <line x1="34" y1="6" x2="28" y2="12" stroke="currentColor" strokeWidth="1" />
-                <line x1="6" y1="34" x2="12" y2="28" stroke="currentColor" strokeWidth="1" />
-                <line x1="34" y1="34" x2="28" y2="28" stroke="currentColor" strokeWidth="1" />
-            </svg>
-        ),
-        'princess': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <rect x="6" y="6" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" />
-                <line x1="6" y1="6" x2="34" y2="34" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="34" y1="6" x2="6" y2="34" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-        ),
-        'radiant': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <polygon points="10,6 30,6 36,12 36,28 30,34 10,34 4,28 4,12" fill="none" stroke="currentColor" strokeWidth="2" />
-                <rect x="14" y="14" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-        ),
-        'heart': (
-            <svg viewBox="0 0 40 40" className="w-10 h-10">
-                <path d="M20 36 C8 24 4 16 10 10 C14 6 18 8 20 12 C22 8 26 6 30 10 C36 16 32 24 20 36" fill="none" stroke="currentColor" strokeWidth="2" />
-            </svg>
-        ),
+        'round-brilliant': <Circle className="w-8 h-8" strokeWidth={1.5} />,
+        'oval': <Circle className="w-8 h-8 scale-x-125" strokeWidth={1.5} />,
+        'cushion': <Square className="w-8 h-8 rounded-lg" strokeWidth={1.5} />,
+        'pear': <Diamond className="w-8 h-8" strokeWidth={1.5} />,
+        'emerald': <RectangleHorizontal className="w-8 h-8" strokeWidth={1.5} />,
+        'marquise': <Diamond className="w-8 h-8 scale-y-150" strokeWidth={1.5} />,
+        'asscher': <Square className="w-8 h-8" strokeWidth={1.5} />,
+        'princess': <Square className="w-8 h-8 rotate-45" strokeWidth={1.5} />,
+        'radiant': <Octagon className="w-8 h-8" strokeWidth={1.5} />,
+        'heart': <Heart className="w-8 h-8" strokeWidth={1.5} />,
     };
 
-    return iconMap[cutId] || (
-        <svg viewBox="0 0 40 40" className="w-10 h-10">
-            <polygon points="20,4 36,36 4,36" fill="none" stroke="currentColor" strokeWidth="2" />
-        </svg>
-    );
+    return iconMap[cutId] || <Triangle className="w-8 h-8" strokeWidth={1.5} />;
 };
 
 export function GemCutSelector({

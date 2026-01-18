@@ -170,10 +170,10 @@ export default function CreateDesignPage() {
                         <Star className="w-4 h-4" />
                         AI-Powered Design Studio
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-serif font-bold mb-3 bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
+                    <h1 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-white">
                         Create Your Masterpiece
                     </h1>
-                    <p className="text-white/50 text-lg max-w-xl mx-auto">
+                    <p className="text-white/70 text-lg max-w-xl mx-auto">
                         Transform your vision into stunning jewelry with the power of AI
                     </p>
                 </div>
