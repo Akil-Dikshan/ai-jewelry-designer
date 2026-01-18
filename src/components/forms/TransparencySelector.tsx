@@ -36,9 +36,9 @@ export function TransparencySelector({
     return (
         <div className="w-full">
             {/* Label */}
-            <label className="block text-sm font-medium text-navy mb-3">
+            <label className="block text-sm font-medium text-white/70 mb-3">
                 How see-through is your gem?
-                {required && <span className="text-error ml-1">*</span>}
+                {required && <span className="text-gold ml-1">*</span>}
             </label>
 
             {/* Transparency Options */}
@@ -56,21 +56,21 @@ export function TransparencySelector({
                         onClick={() => !disabled && onChange(option.value)}
                         disabled={disabled}
                         className={cn(
-                            'flex flex-col items-center p-5 rounded-lg',
-                            'border-2 transition-all duration-200',
-                            'focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2',
+                            'flex flex-col items-center p-5 rounded-xl',
+                            'border transition-all duration-200',
+                            'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:ring-offset-2 focus:ring-offset-[#0a0a0f]',
                             disabled && 'opacity-60 cursor-not-allowed',
                             !disabled && 'cursor-pointer',
                             value === option.value
-                                ? 'border-gold bg-cream shadow-md'
-                                : 'border-light-gray bg-white hover:border-gold hover:shadow-sm'
+                                ? 'border-gold/50 bg-gold/10 shadow-lg shadow-gold/10'
+                                : 'border-white/10 bg-white/5 hover:border-gold/30 hover:bg-white/10'
                         )}
                     >
                         {/* Icon */}
                         <div
                             className={cn(
                                 'mb-3 transition-colors duration-200',
-                                value === option.value ? 'text-gold' : 'text-slate'
+                                value === option.value ? 'text-gold' : 'text-white/50'
                             )}
                         >
                             <TransparencyIcon type={option.value} />
@@ -80,14 +80,14 @@ export function TransparencySelector({
                         <span
                             className={cn(
                                 'font-medium text-sm transition-colors duration-200',
-                                value === option.value ? 'text-navy' : 'text-slate'
+                                value === option.value ? 'text-gold' : 'text-white/80'
                             )}
                         >
                             {option.label}
                         </span>
 
                         {/* Description */}
-                        <span className="text-xs text-slate mt-1 text-center">
+                        <span className="text-xs text-white/40 mt-1 text-center">
                             {option.description}
                         </span>
                     </button>
@@ -95,13 +95,13 @@ export function TransparencySelector({
             </div>
 
             {/* Helper Text */}
-            <p className="mt-3 text-sm text-slate">
+            <p className="mt-3 text-sm text-white/40">
                 This helps us render light and reflections accurately
             </p>
 
             {/* Error Message */}
             {error && (
-                <p className="mt-1 text-sm text-error" role="alert">
+                <p className="mt-1 text-sm text-red-400" role="alert">
                     {error}
                 </p>
             )}

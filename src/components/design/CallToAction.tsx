@@ -6,10 +6,22 @@ import { cn } from '@/lib/utils';
 
 interface CallToActionProps {
     selectedImageId: string | null;
+    selectedImageUrl?: string | null;
+    designId?: string | null;
     onShare?: () => void;
 }
 
-export function CallToAction({ selectedImageId, onShare }: CallToActionProps) {
+export function CallToAction({ selectedImageId, selectedImageUrl, designId, onShare }: CallToActionProps) {
+    // Build refine URL with all available params
+    const buildRefineUrl = () => {
+        const params = new URLSearchParams();
+        if (selectedImageId) params.set('imageId', selectedImageId);
+        // Don't double-encode - URLSearchParams.set() already handles encoding
+        if (selectedImageUrl) params.set('imageUrl', selectedImageUrl);
+        if (designId) params.set('designId', designId);
+        return `/design/refine?${params.toString()}`;
+    };
+
     return (
         <div className="bg-white rounded-xl border border-light-gray p-6">
             <h3 className="text-lg font-serif font-semibold text-navy mb-4">
@@ -20,7 +32,7 @@ export function CallToAction({ selectedImageId, onShare }: CallToActionProps) {
                 {/* Refine Selected */}
                 {selectedImageId ? (
                     <Link
-                        href={`/design/refine?imageId=${selectedImageId}`}
+                        href={buildRefineUrl()}
                         className={cn(
                             'flex items-center justify-between w-full',
                             'px-4 py-3 rounded-lg',

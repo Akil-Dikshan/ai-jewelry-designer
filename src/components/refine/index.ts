@@ -7,3 +7,4 @@ export { AdvancedOptions } from './AdvancedOptions';
 export { ComparisonView } from './ComparisonView';
 export { RefinementProgress } from './RefinementProgress';
 export { RefinementResult } from './RefinementResult';
+export { ShareModal } from './ShareModal';
