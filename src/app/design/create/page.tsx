@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Gem } from 'lucide-react';
+import Link from 'next/link';
+import { Gem, Check, ChevronRight, Sparkles, Upload, Palette, Wand2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { UserMenu, GuestBanner } from '@/components/layout';
 import {
@@ -22,8 +23,17 @@ import type { TransparencyValue } from '@/constants/colors';
 import type { GemSize } from '@/types/gem.types';
 import type { MaterialPreferences as MaterialPreferencesType } from '@/types/form.types';
 
+// Step configuration
+const STEPS = [
+    { id: 1, title: 'Gem Details', icon: Gem, description: 'Type, cut, size & color' },
+    { id: 2, title: 'Upload Photo', icon: Upload, description: 'Optional reference image' },
+    { id: 3, title: 'Design Vision', icon: Palette, description: 'Describe your dream jewelry' },
+    { id: 4, title: 'Generate', icon: Wand2, description: 'Create AI designs' },
+];
+
 export default function CreateDesignPage() {
     const router = useRouter();
+    const [currentStep, setCurrentStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -48,14 +58,21 @@ export default function CreateDesignPage() {
     });
     const [numVariations, setNumVariations] = useState<2 | 3 | 4>(3);
 
-    // Validation
-    const isFormValid =
-        gemType !== null &&
-        gemCut !== null &&
+    // Step validation
+    const isStep1Valid = gemType !== null && gemCut !== null &&
         (gemSize.mode === 'simple' ? gemSize.simple !== null : gemSize.dimensions?.lengthMm !== null) &&
-        gemColor !== null &&
-        transparency !== null &&
-        designPrompt.length >= 10;
+        gemColor !== null && transparency !== null;
+    const isStep2Valid = true; // Optional step
+    const isStep3Valid = designPrompt.length >= 10;
+    const isFormValid = isStep1Valid && isStep3Valid;
+
+    const getStepStatus = (stepId: number) => {
+        if (stepId === 1) return isStep1Valid ? 'complete' : (currentStep === 1 ? 'current' : 'upcoming');
+        if (stepId === 2) return currentStep > 2 ? 'complete' : (currentStep === 2 ? 'current' : 'upcoming');
+        if (stepId === 3) return isStep3Valid ? 'complete' : (currentStep === 3 ? 'current' : 'upcoming');
+        if (stepId === 4) return currentStep === 4 ? 'current' : 'upcoming';
+        return 'upcoming';
+    };
 
     const handleGemTypeChange = (type: GemTypeName, custom?: string) => {
         setGemType(type);
@@ -134,135 +151,342 @@ export default function CreateDesignPage() {
         }
     };
 
+    const nextStep = () => {
+        if (currentStep < 4) setCurrentStep(currentStep + 1);
+    };
+
+    const prevStep = () => {
+        if (currentStep > 1) setCurrentStep(currentStep - 1);
+    };
+
     return (
-        <div className="min-h-screen bg-cream">
+        <div className="min-h-screen bg-gradient-to-br from-cream via-white to-cream">
             {/* Guest Banner */}
             <GuestBanner variant="minimal" />
 
             {/* Header */}
-            <header className="bg-navy text-white py-4 px-6">
-                <div className="max-w-4xl mx-auto flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+            <header className="bg-navy text-white py-4 px-6 sticky top-0 z-40">
+                <div className="max-w-6xl mx-auto flex items-center justify-between">
+                    <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                         <Gem className="w-8 h-8 text-gold" />
                         <h1 className="text-xl font-serif font-semibold">AI Jewelry Designer</h1>
-                    </div>
+                    </Link>
                     <UserMenu />
                 </div>
             </header>
 
-            {/* Main Content */}
-            <main className="max-w-4xl mx-auto px-4 py-8">
+            <div className="max-w-6xl mx-auto px-4 py-8">
                 {/* Page Title */}
                 <div className="text-center mb-8">
-                    <h2 className="text-3xl font-serif font-bold text-navy mb-2">
-                        Create Your Dream Design
+                    <h2 className="text-3xl md:text-4xl font-serif font-bold text-navy mb-2">
+                        Design Your Perfect Jewelry
                     </h2>
-                    <p className="text-slate">
-                        Tell us about your gem and describe your vision
+                    <p className="text-slate text-lg">
+                        Follow the steps below to create your AI-generated masterpiece
                     </p>
+                </div>
+
+                {/* Stepper Navigation */}
+                <div className="mb-10">
+                    <div className="flex items-center justify-between max-w-3xl mx-auto">
+                        {STEPS.map((step, index) => {
+                            const status = getStepStatus(step.id);
+                            const StepIcon = step.icon;
+
+                            return (
+                                <div key={step.id} className="flex items-center">
+                                    {/* Step Circle */}
+                                    <button
+                                        onClick={() => setCurrentStep(step.id)}
+                                        className={cn(
+                                            'flex flex-col items-center gap-2 group transition-all',
+                                            status === 'complete' && 'cursor-pointer',
+                                            status === 'current' && 'cursor-default',
+                                        )}
+                                    >
+                                        <div className={cn(
+                                            'w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all',
+                                            'border-2 shadow-md',
+                                            status === 'complete' && 'bg-success border-success text-white',
+                                            status === 'current' && 'bg-gold border-gold text-navy scale-110',
+                                            status === 'upcoming' && 'bg-white border-light-gray text-slate',
+                                        )}>
+                                            {status === 'complete' ? (
+                                                <Check className="w-6 h-6" />
+                                            ) : (
+                                                <StepIcon className="w-5 h-5 md:w-6 md:h-6" />
+                                            )}
+                                        </div>
+                                        <div className="text-center hidden md:block">
+                                            <p className={cn(
+                                                'text-sm font-medium',
+                                                status === 'current' ? 'text-navy' : 'text-slate'
+                                            )}>
+                                                {step.title}
+                                            </p>
+                                            <p className="text-xs text-slate/70">{step.description}</p>
+                                        </div>
+                                    </button>
+
+                                    {/* Connector Line */}
+                                    {index < STEPS.length - 1 && (
+                                        <div className={cn(
+                                            'flex-1 h-1 mx-2 md:mx-4 rounded transition-colors',
+                                            status === 'complete' ? 'bg-success' : 'bg-light-gray'
+                                        )} />
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
 
                 {/* Error Alert */}
                 {error && (
-                    <div className="mb-6 p-4 bg-red-50 border border-error rounded-lg text-error">
-                        {error}
+                    <div className="mb-6 p-4 bg-red-50 border border-error rounded-xl text-error max-w-3xl mx-auto animate-fade-in">
+                        <p className="font-medium">⚠️ {error}</p>
                     </div>
                 )}
 
-                {/* Form */}
-                <div className="space-y-8">
-                    {/* Section 1: Gem Information */}
-                    <section className="bg-white rounded-xl p-6 shadow-sm border border-light-gray">
-                        <h3 className="text-lg font-serif font-semibold text-navy mb-6 pb-2 border-b border-light-gray">
-                            1. Gem Information
-                        </h3>
-                        <div className="space-y-6">
-                            <GemTypeSelector
-                                value={gemType}
-                                onChange={handleGemTypeChange}
-                                customType={customGemType}
-                                required
-                            />
-                            <GemCutSelector
-                                value={gemCut}
-                                onChange={setGemCut}
-                                required
-                            />
-                            <GemSizeInput
-                                value={gemSize}
-                                onChange={setGemSize}
-                                required
-                            />
-                            <GemColorSelector
-                                value={gemColor}
-                                onChange={handleGemColorChange}
-                                customColor={customColor}
-                                required
-                            />
-                            <TransparencySelector
-                                value={transparency}
-                                onChange={setTransparency}
-                                required
-                            />
+                {/* Step Content */}
+                <div className="max-w-3xl mx-auto">
+                    {/* Step 1: Gem Details */}
+                    {currentStep === 1 && (
+                        <div className="animate-fade-in">
+                            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-light-gray/50">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
+                                        <Gem className="w-5 h-5 text-gold" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-serif font-semibold text-navy">Gem Details</h3>
+                                        <p className="text-sm text-slate">Tell us about your gemstone</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <GemTypeSelector
+                                        value={gemType}
+                                        onChange={handleGemTypeChange}
+                                        customType={customGemType}
+                                        required
+                                    />
+                                    <GemCutSelector
+                                        value={gemCut}
+                                        onChange={setGemCut}
+                                        required
+                                    />
+                                    <GemSizeInput
+                                        value={gemSize}
+                                        onChange={setGemSize}
+                                        required
+                                    />
+                                    <GemColorSelector
+                                        value={gemColor}
+                                        onChange={handleGemColorChange}
+                                        customColor={customColor}
+                                        required
+                                    />
+                                    <TransparencySelector
+                                        value={transparency}
+                                        onChange={setTransparency}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Navigation */}
+                            <div className="flex justify-end mt-6">
+                                <button
+                                    onClick={nextStep}
+                                    disabled={!isStep1Valid}
+                                    className={cn(
+                                        'flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all',
+                                        isStep1Valid
+                                            ? 'bg-navy text-white hover:bg-navy/90 shadow-lg hover:shadow-xl'
+                                            : 'bg-light-gray text-slate cursor-not-allowed'
+                                    )}
+                                >
+                                    Continue
+                                    <ChevronRight className="w-5 h-5" />
+                                </button>
+                            </div>
                         </div>
-                    </section>
+                    )}
 
-                    {/* Section 2: Image Upload */}
-                    <section className="bg-white rounded-xl p-6 shadow-sm border border-light-gray">
-                        <h3 className="text-lg font-serif font-semibold text-navy mb-6 pb-2 border-b border-light-gray">
-                            2. Gem Photo
-                        </h3>
-                        <ImageUpload
-                            value={gemImage}
-                            onChange={setGemImage}
-                        />
-                    </section>
+                    {/* Step 2: Upload Photo */}
+                    {currentStep === 2 && (
+                        <div className="animate-fade-in">
+                            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-light-gray/50">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
+                                        <Upload className="w-5 h-5 text-gold" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-serif font-semibold text-navy">Upload Photo</h3>
+                                        <p className="text-sm text-slate">Optional: Add a reference image of your gem</p>
+                                    </div>
+                                </div>
 
-                    {/* Section 3: Design Description */}
-                    <section className="bg-white rounded-xl p-6 shadow-sm border border-light-gray">
-                        <h3 className="text-lg font-serif font-semibold text-navy mb-6 pb-2 border-b border-light-gray">
-                            3. Design Description
-                        </h3>
-                        <div className="space-y-6">
-                            <DesignPrompt
-                                value={designPrompt}
-                                onChange={setDesignPrompt}
-                                required
-                            />
-                            <MaterialPreferences
-                                value={materials}
-                                onChange={setMaterials}
-                            />
+                                <ImageUpload
+                                    value={gemImage}
+                                    onChange={setGemImage}
+                                />
+                            </div>
+
+                            {/* Navigation */}
+                            <div className="flex justify-between mt-6">
+                                <button
+                                    onClick={prevStep}
+                                    className="px-6 py-3 rounded-xl font-medium text-slate hover:text-navy transition-colors"
+                                >
+                                    Back
+                                </button>
+                                <button
+                                    onClick={nextStep}
+                                    className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium bg-navy text-white hover:bg-navy/90 shadow-lg hover:shadow-xl transition-all"
+                                >
+                                    Continue
+                                    <ChevronRight className="w-5 h-5" />
+                                </button>
+                            </div>
                         </div>
-                    </section>
+                    )}
 
-                    {/* Section 4: Generate */}
-                    <section className="bg-white rounded-xl p-6 shadow-sm border border-light-gray">
-                        <h3 className="text-lg font-serif font-semibold text-navy mb-6 pb-2 border-b border-light-gray">
-                            4. Generate Your Design
-                        </h3>
-                        <GenerateButton
-                            onClick={handleGenerate}
-                            isLoading={isLoading}
-                            disabled={!isFormValid}
-                            numVariations={numVariations}
-                            onVariationsChange={setNumVariations}
-                        />
-                    </section>
+                    {/* Step 3: Design Vision */}
+                    {currentStep === 3 && (
+                        <div className="animate-fade-in">
+                            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-light-gray/50">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
+                                        <Palette className="w-5 h-5 text-gold" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-serif font-semibold text-navy">Design Vision</h3>
+                                        <p className="text-sm text-slate">Describe your dream jewelry piece</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <DesignPrompt
+                                        value={designPrompt}
+                                        onChange={setDesignPrompt}
+                                        required
+                                    />
+                                    <MaterialPreferences
+                                        value={materials}
+                                        onChange={setMaterials}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Navigation */}
+                            <div className="flex justify-between mt-6">
+                                <button
+                                    onClick={prevStep}
+                                    className="px-6 py-3 rounded-xl font-medium text-slate hover:text-navy transition-colors"
+                                >
+                                    Back
+                                </button>
+                                <button
+                                    onClick={nextStep}
+                                    disabled={!isStep3Valid}
+                                    className={cn(
+                                        'flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all',
+                                        isStep3Valid
+                                            ? 'bg-navy text-white hover:bg-navy/90 shadow-lg hover:shadow-xl'
+                                            : 'bg-light-gray text-slate cursor-not-allowed'
+                                    )}
+                                >
+                                    Continue
+                                    <ChevronRight className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Step 4: Generate */}
+                    {currentStep === 4 && (
+                        <div className="animate-fade-in">
+                            <div className="bg-gradient-to-br from-navy to-navy/90 rounded-2xl p-6 md:p-8 shadow-xl text-white">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
+                                        <Sparkles className="w-5 h-5 text-gold" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-serif font-semibold">Ready to Create</h3>
+                                        <p className="text-sm text-white/70">Review and generate your designs</p>
+                                    </div>
+                                </div>
+
+                                {/* Summary */}
+                                <div className="bg-white/10 rounded-xl p-5 mb-6 backdrop-blur-sm">
+                                    <h4 className="font-medium mb-3 text-gold">Your Design Summary</h4>
+                                    <div className="grid grid-cols-2 gap-3 text-sm">
+                                        <div>
+                                            <span className="text-white/60">Gem Type:</span>
+                                            <span className="ml-2">{gemType === 'Other' ? customGemType : gemType}</span>
+                                        </div>
+                                        <div>
+                                            <span className="text-white/60">Cut:</span>
+                                            <span className="ml-2">{gemCut}</span>
+                                        </div>
+                                        <div>
+                                            <span className="text-white/60">Color:</span>
+                                            <span className="ml-2">{gemColor === 'custom' ? customColor : gemColor}</span>
+                                        </div>
+                                        <div>
+                                            <span className="text-white/60">Transparency:</span>
+                                            <span className="ml-2">{transparency}</span>
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 pt-3 border-t border-white/10">
+                                        <span className="text-white/60">Vision:</span>
+                                        <p className="mt-1 text-sm line-clamp-2">{designPrompt}</p>
+                                    </div>
+                                </div>
+
+                                <GenerateButton
+                                    onClick={handleGenerate}
+                                    isLoading={isLoading}
+                                    disabled={!isFormValid}
+                                    numVariations={numVariations}
+                                    onVariationsChange={setNumVariations}
+                                />
+                            </div>
+
+                            {/* Navigation */}
+                            <div className="flex justify-start mt-6">
+                                <button
+                                    onClick={prevStep}
+                                    className="px-6 py-3 rounded-xl font-medium text-slate hover:text-navy transition-colors"
+                                >
+                                    Back
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            </main>
+            </div>
 
             {/* Loading Overlay */}
             {isLoading && (
-                <div className="fixed inset-0 bg-navy/50 backdrop-blur-sm flex items-center justify-center z-50">
-                    <div className="bg-white rounded-xl p-8 shadow-2xl text-center mx-4" style={{ maxWidth: '448px' }}>
-                        <div className="w-16 h-16 border-4 border-light-gray border-t-gold rounded-full animate-spin mx-auto mb-4" />
-                        <h3 className="text-xl font-serif font-semibold text-navy mb-2">
-                            Creating Your Designs
+                <div className="fixed inset-0 bg-navy/60 backdrop-blur-md flex items-center justify-center z-50">
+                    <div className="bg-white rounded-2xl p-8 shadow-2xl text-center mx-4 max-w-md animate-fade-in">
+                        <div className="relative w-20 h-20 mx-auto mb-6">
+                            <div className="absolute inset-0 border-4 border-light-gray rounded-full" />
+                            <div className="absolute inset-0 border-4 border-transparent border-t-gold rounded-full animate-spin" />
+                            <Sparkles className="absolute inset-0 m-auto w-8 h-8 text-gold animate-pulse" />
+                        </div>
+                        <h3 className="text-2xl font-serif font-semibold text-navy mb-2">
+                            Creating Magic ✨
                         </h3>
                         <p className="text-slate">
-                            Our AI is crafting unique jewelry concepts just for you...
+                            Our AI is crafting {numVariations} unique jewelry concepts just for you...
                         </p>
+                        <div className="mt-4 text-sm text-slate/70">
+                            This may take 15-30 seconds
+                        </div>
                     </div>
                 </div>
             )}
