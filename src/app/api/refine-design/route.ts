@@ -212,7 +212,7 @@ export async function POST(request: NextRequest) {
                         preserveElements,
                         styleGuidance,
                     },
-                    model: USE_MOCK ? 'mock' : 'gemini-2.0-flash-exp',
+                    model: USE_MOCK ? 'mock' : 'gemini-2.5-flash-image',
                 },
             },
             { headers: getRateLimitHeaders('refinement', clientIP) }
