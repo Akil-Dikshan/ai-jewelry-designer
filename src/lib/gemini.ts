@@ -22,7 +22,7 @@ const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
 // Use Gemini 2.0 Flash Experimental for image generation
 // This is the ONLY model that supports image output
 // Requires billing enabled for quota
-const MODEL_NAME = 'gemini-2.0-flash-exp';
+const MODEL_NAME = 'gemini-2.5-flash-image';
 
 /**
  * Configuration for image generation

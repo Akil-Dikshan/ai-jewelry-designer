@@ -203,7 +203,7 @@ export async function POST(request: NextRequest) {
                     generationTime,
                     variationsRequested: validNumVariations,
                     variationsGenerated: images.length,
-                    model: USE_MOCK ? 'mock' : 'gemini-2.0-flash-exp',
+                    model: USE_MOCK ? 'mock' : 'gemini-2.5-flash-image',
                 },
             },
             { headers: getRateLimitHeaders('guest', clientIP) }
